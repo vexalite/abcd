@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Book } from './schema';
-import { BaseRepository } from 'base.repository';
+import { BaseRepository } from 'src/repository';
 import { BookInstitute } from 'src/book-institute-relation/schema';
 
 @Injectable()
