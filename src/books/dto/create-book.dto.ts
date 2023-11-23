@@ -35,14 +35,6 @@ class IsbnDto {
   ISBN13?: string;
 }
 
-export class InstituteDto {
-  @IsString()
-  instituteId!: string;
-
-  @IsNumber()
-  quantity!: number;
-}
-
 export class BookDto {
   @IsString()
   title!: string;
@@ -94,10 +86,6 @@ export class BookDto {
 
   @IsString()
   language!: string;
-
-  @Type(() => InstituteDto)
-  @ValidateNested()
-  institutes!: InstituteDto[];
 
   @IsBoolean()
   isAvailableForIssue!: boolean;

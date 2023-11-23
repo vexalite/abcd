@@ -1,6 +1,7 @@
 import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
 import { ReservationsService } from './service';
 import { CreateReservationDto } from './dto/create-reservation.dto';
+import { FreezePipe } from 'src/pipes/freezePipe';
 
 @Controller('reservations')
 export class ReservationsController {

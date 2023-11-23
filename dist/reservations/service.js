@@ -21,36 +21,39 @@ let ReservationsService = class ReservationsService {
         this.instituteSettingRepository = instituteSettingRepository;
     }
     async issue(body) {
-        const getQuantity = await this.bookInstitutesRepository.findOne({
-            bookId: body.bookId,
-            instituteId: body.instituteId,
-        });
-        const getIssued = await this.reservationRepository.findMultiple({
-            bookId: body.bookId,
-            instituteId: body.instituteId,
-        });
-        const checkAvailability = getQuantity.quantity - getIssued.length;
-        console.log(`available -- ${checkAvailability}`);
-        const getBorrowingPeriod = await this.instituteSettingRepository.findOne({
-            instituteId: body.instituteId,
-        });
-        if (checkAvailability > 0) {
-            if (body.patronType === 'student') {
-                console.log(getIssued);
-                body.dueDate = new Date();
-                body.dueDate.setDate(body.dueDate.getDate() + getBorrowingPeriod.student.borrowingPeriod);
-                const createdReservation = await this.reservationRepository.create(body);
-                return createdReservation;
+        try {
+            const getQuantity = await this.bookInstitutesRepository.findOne({
+                bookId: body.bookId,
+                instituteId: body.instituteId,
+            });
+            const getIssued = await this.reservationRepository.findMultiple({
+                bookId: body.bookId,
+                instituteId: body.instituteId,
+            });
+            const checkAvailability = getQuantity.quantity - getIssued.length;
+            const getBorrowingPeriod = await this.instituteSettingRepository.findOne({
+                instituteId: body.instituteId,
+            });
+            if (checkAvailability > 0) {
+                if (body.patronType === 'student') {
+                    body.dueDate = new Date();
+                    body.dueDate.setDate(body.dueDate.getDate() + getBorrowingPeriod.student.borrowingPeriod);
+                    const createdReservation = await this.reservationRepository.create(body);
+                    return createdReservation;
+                }
+                else {
+                    body.dueDate = new Date();
+                    body.dueDate.setDate(body.dueDate.getDate() + getBorrowingPeriod.employee.borrowingPeriod);
+                    const createdReservation = await this.reservationRepository.create(body);
+                    return createdReservation;
+                }
             }
             else {
-                body.dueDate = new Date();
-                body.dueDate.setDate(body.dueDate.getDate() + getBorrowingPeriod.employee.borrowingPeriod);
-                const createdReservation = await this.reservationRepository.create(body);
-                return createdReservation;
+                return `unfortunately!, this book is not available`;
             }
         }
-        else {
-            return `unfortunately!, this book is not available`;
+        catch (err) {
+            console.log(err);
         }
     }
     async reIssueBook(id) {

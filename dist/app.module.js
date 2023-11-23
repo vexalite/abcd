@@ -17,7 +17,18 @@ const module_2 = require("./book-institute-relation/module");
 const module_3 = require("./instituteSettings/module");
 const module_4 = require("./reservations/module");
 const module_5 = require("./search/module");
+const request_service_1 = require("./request.service");
+const auth_1 = require("./middleware/auth");
+const core_1 = require("@nestjs/core");
+const auth_2 = require("./guards/auth");
+const logging_1 = require("./interceptors/logging");
+const http_exception_1 = require("./filters/http-exception");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer
+            .apply(auth_1.AuthenticationMiddleware)
+            .forRoutes('*');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
@@ -35,7 +46,18 @@ exports.AppModule = AppModule = __decorate([
             module_5.SearchModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService, request_service_1.RequestService, {
+                provide: core_1.APP_GUARD,
+                useClass: auth_2.Authguard
+            }, {
+                provide: core_1.APP_INTERCEPTOR,
+                scope: common_1.Scope.REQUEST,
+                useClass: logging_1.LoggingInterceptor
+            }, {
+                provide: core_1.APP_FILTER,
+                useClass: http_exception_1.exceptionFilter
+            }
+        ],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

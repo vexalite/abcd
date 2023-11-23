@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.BookDto = exports.InstituteDto = exports.CreateCatalogDto = void 0;
+exports.BookDto = exports.CreateCatalogDto = void 0;
 const class_validator_1 = require("class-validator");
 const class_transformer_1 = require("class-transformer");
 class CreateCatalogDto {
@@ -42,17 +42,6 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], IsbnDto.prototype, "ISBN13", void 0);
-class InstituteDto {
-}
-exports.InstituteDto = InstituteDto;
-__decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], InstituteDto.prototype, "instituteId", void 0);
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
-], InstituteDto.prototype, "quantity", void 0);
 class BookDto {
 }
 exports.BookDto = BookDto;
@@ -121,11 +110,6 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], BookDto.prototype, "language", void 0);
-__decorate([
-    (0, class_transformer_1.Type)(() => InstituteDto),
-    (0, class_validator_1.ValidateNested)(),
-    __metadata("design:type", Array)
-], BookDto.prototype, "institutes", void 0);
 __decorate([
     (0, class_validator_1.IsBoolean)(),
     __metadata("design:type", Boolean)

@@ -8,25 +8,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var AppService_1;
+var AuthenticationMiddleware_1;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppService = void 0;
+exports.AuthenticationMiddleware = void 0;
 const common_1 = require("@nestjs/common");
-const request_service_1 = require("./request.service");
-let AppService = AppService_1 = class AppService {
+const request_service_1 = require("../request.service");
+let AuthenticationMiddleware = AuthenticationMiddleware_1 = class AuthenticationMiddleware {
     constructor(requestService) {
         this.requestService = requestService;
-        this.logger = new common_1.Logger(AppService_1.name);
+        this.logger = new common_1.Logger(AuthenticationMiddleware_1.name);
     }
-    getHello() {
-        const instituteId = this.requestService.getInstituteID();
-        this.logger.log(`getHello instituteId: ${instituteId}`);
-        return 'Hello World!';
+    use(req, res, next) {
+        this.logger.log(AuthenticationMiddleware_1.name);
+        const instituteId = '123';
+        this.requestService.setInstituteId(instituteId);
+        next();
     }
 };
-exports.AppService = AppService;
-exports.AppService = AppService = AppService_1 = __decorate([
+exports.AuthenticationMiddleware = AuthenticationMiddleware;
+exports.AuthenticationMiddleware = AuthenticationMiddleware = AuthenticationMiddleware_1 = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [request_service_1.RequestService])
-], AppService);
-//# sourceMappingURL=app.service.js.map
+], AuthenticationMiddleware);
+//# sourceMappingURL=auth.js.map

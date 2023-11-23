@@ -12,8 +12,8 @@ export class ReservationsService {
     private readonly bookInstitutesRepository: BookInstitutesRepository,
     private readonly instituteSettingRepository: InstituteSettingRepository,
   ) {}
-
   async issue(body: CreateReservationDto): Promise<Reservation | string> {
+    try{
     const getQuantity = await this.bookInstitutesRepository.findOne({
       bookId: body.bookId,
       instituteId: body.instituteId,
@@ -27,7 +27,7 @@ export class ReservationsService {
     // console.log(getIssued.length);
 
     const checkAvailability = getQuantity.quantity - getIssued.length;
-    console.log(`available -- ${checkAvailability}`);
+    // console.log(`available -- ${checkAvailability}`);
 
     const getBorrowingPeriod = await this.instituteSettingRepository.findOne({
       instituteId: body.instituteId,
@@ -35,7 +35,7 @@ export class ReservationsService {
     // console.log(getBorrowingPeriod.student.borrowingPeriod);
     if (checkAvailability > 0) {
       if (body.patronType === 'student') {
-        console.log(getIssued);
+        // console.log(getIssued);
         // if (getIssued.patronId === body.patronId) {
         body.dueDate = new Date();
         body.dueDate.setDate(
@@ -59,6 +59,9 @@ export class ReservationsService {
     } else {
       return `unfortunately!, this book is not available`;
     }
+  }catch(err){
+    console.log(err)
+  }
   }
 
   async reIssueBook(id: string): Promise<Reservation | string> {

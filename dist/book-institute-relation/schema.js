@@ -16,13 +16,9 @@ let BookInstitutes = class BookInstitutes extends mongoose_2.Document {
 };
 exports.BookInstitutes = BookInstitutes;
 __decorate([
-    (0, mongoose_1.Prop)({ unique: true }),
-    __metadata("design:type", String)
-], BookInstitutes.prototype, "id", void 0);
-__decorate([
     (0, mongoose_1.Prop)({ required: true, type: mongoose_2.Types.ObjectId, ref: 'Book' }),
     __metadata("design:type", String)
-], BookInstitutes.prototype, "bookInfo", void 0);
+], BookInstitutes.prototype, "bookId", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
@@ -31,26 +27,9 @@ __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", Number)
 ], BookInstitutes.prototype, "quantity", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ required: true, default: true }),
-    __metadata("design:type", Boolean)
-], BookInstitutes.prototype, "isAvailableForIssue", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ required: false }),
-    __metadata("design:type", String)
-], BookInstitutes.prototype, "barcode", void 0);
-__decorate([
-    (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", String)
-], BookInstitutes.prototype, "individualBookId", void 0);
 exports.BookInstitutes = BookInstitutes = __decorate([
     (0, mongoose_1.Schema)()
 ], BookInstitutes);
 const BookInstituteSchema = mongoose_1.SchemaFactory.createForClass(BookInstitutes);
 exports.BookInstituteSchema = BookInstituteSchema;
-BookInstituteSchema.pre('save', function (next) {
-    const prefix = 'customPrefix-';
-    this._id = prefix + this.individualBookId;
-    next();
-});
 //# sourceMappingURL=schema.js.map

@@ -24,21 +24,14 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { Document, Types } from 'mongoose';
 export interface BookInstitute extends Document {
-    bookInfo: string;
+    bookId: string;
     instituteId: string;
     quantity: number;
-    isAvailableForIssue?: boolean;
-    barcode?: string;
-    individualBookId: string;
 }
 export declare class BookInstitutes extends Document {
-    id: string;
-    bookInfo: string;
+    bookId: string;
     instituteId: string;
     quantity: number;
-    isAvailableForIssue: boolean;
-    barcode: string;
-    individualBookId: string;
 }
 declare const BookInstituteSchema: import("mongoose").Schema<BookInstitutes, import("mongoose").Model<BookInstitutes, any, any, any, Document<unknown, any, BookInstitutes> & BookInstitutes & {
     _id: Types.ObjectId;
