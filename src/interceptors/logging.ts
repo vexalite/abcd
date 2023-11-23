@@ -28,7 +28,7 @@ export class LoggingInterceptor implements NestInterceptor {
                 this.logger.log(`
                 ${method} ${url} ${statusCode} ${contentLength} - ${userAgent} ${ip}: ${Date.now()- now}ms`)
 
-                this.logger.debug('Response:', res)
+                // this.logger.debug('Response:', res)
             })
         )
     }

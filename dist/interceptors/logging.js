@@ -33,7 +33,6 @@ let LoggingInterceptor = LoggingInterceptor_1 = class LoggingInterceptor {
             const contentLength = response.get('content-length');
             this.logger.log(`
                 ${method} ${url} ${statusCode} ${contentLength} - ${userAgent} ${ip}: ${Date.now() - now}ms`);
-            this.logger.debug('Response:', res);
         }));
     }
 };
