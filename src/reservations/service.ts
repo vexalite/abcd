@@ -4,25 +4,32 @@ import { Reservation } from './schema';
 import { ReservationRepository } from './repository';
 import { BookInstitutesRepository } from 'src/book-institute-relation/repository';
 import { InstituteSettingRepository } from 'src/instituteSettings/repository';
+import { RequestService } from 'src/request.service';
 
 @Injectable()
 export class ReservationsService {
+  private instituteId: string;
   constructor(
+    private readonly requestService: RequestService,
     private readonly reservationRepository: ReservationRepository,
     private readonly bookInstitutesRepository: BookInstitutesRepository,
     private readonly instituteSettingRepository: InstituteSettingRepository,
-  ) {}
+  ) {this.instituteId = this.requestService.getInstituteID()}
+
+  
+
   async issue(body: CreateReservationDto): Promise<Reservation | string> {
     try{
+      console.log(this.instituteId)
     const getQuantity = await this.bookInstitutesRepository.findOne({
       bookId: body.bookId,
-      instituteId: body.instituteId,
+      instituteId: this.instituteId,
     });
     // console.log(getQuantity.quantity);
 
     const getIssued = await this.reservationRepository.findMultiple({
       bookId: body.bookId,
-      instituteId: body.instituteId,
+      instituteId: this.instituteId,
     });
     // console.log(getIssued.length);
 
@@ -30,7 +37,7 @@ export class ReservationsService {
     // console.log(`available -- ${checkAvailability}`);
 
     const getBorrowingPeriod = await this.instituteSettingRepository.findOne({
-      instituteId: body.instituteId,
+      instituteId: this.instituteId,
     });
     // console.log(getBorrowingPeriod.student.borrowingPeriod);
     if (checkAvailability > 0) {
@@ -42,7 +49,10 @@ export class ReservationsService {
           body.dueDate.getDate() + getBorrowingPeriod.student.borrowingPeriod,
         );
         const createdReservation =
-          await this.reservationRepository.create(body);
+          await this.reservationRepository.create({
+            ...body,
+            instituteId: this.instituteId,
+          });
         return createdReservation;
         // } else {
         //   return `max capacity reached`;
@@ -53,7 +63,10 @@ export class ReservationsService {
           body.dueDate.getDate() + getBorrowingPeriod.employee.borrowingPeriod,
         );
         const createdReservation =
-          await this.reservationRepository.create(body);
+          await this.reservationRepository.create({
+            ...body,
+            instituteId: this.instituteId,
+          });
         return createdReservation;
       }
     } else {
@@ -131,10 +144,9 @@ export class ReservationsService {
     }
   }
 
-  async findAll(id: string): Promise<Reservation[]> {
-    console.log(id);
-    const allReservations =
-      await this.reservationRepository.findAllReservation(id);
+  async findAll(): Promise<Reservation[]> {
+    console.log(this.instituteId)
+    const allReservations = await this.reservationRepository.findAllReservation(this.instituteId);
     return allReservations;
   }
 

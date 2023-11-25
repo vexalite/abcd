@@ -5,12 +5,11 @@ import { SearchService } from './service';
 export class SearchController {
   constructor(private readonly searchService: SearchService) {}
 
-  @Get('universal/:instituteid/:text')
+  @Get(':text')
   async universalSearch(
-    @Param('instituteid') instituteid: string,
     @Param('text') text: string,
   ) {
-    const books = await this.searchService.universalSearch(instituteid, text);
+    const books = await this.searchService.universalSearch(text);
     return books;
   }
 

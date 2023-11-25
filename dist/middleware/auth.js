@@ -13,15 +13,42 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthenticationMiddleware = void 0;
 const common_1 = require("@nestjs/common");
 const request_service_1 = require("../request.service");
+const jwt = require("jsonwebtoken");
 let AuthenticationMiddleware = AuthenticationMiddleware_1 = class AuthenticationMiddleware {
     constructor(requestService) {
         this.requestService = requestService;
         this.logger = new common_1.Logger(AuthenticationMiddleware_1.name);
     }
     use(req, res, next) {
-        this.logger.log(AuthenticationMiddleware_1.name);
-        const instituteId = '123';
-        this.requestService.setInstituteId(instituteId);
+        this.logger.debug(AuthenticationMiddleware_1.name);
+        const authorizationHeader = req.headers['authorization'];
+        if (!authorizationHeader) {
+            this.logger.error('Authorization header not present in the request');
+        }
+        const [bearer, jwtToken] = authorizationHeader.split(' ');
+        if (bearer.toLowerCase() !== 'bearer' || !jwtToken) {
+            this.logger.error('Invalid or missing Bearer token in the authorization header');
+            return next();
+        }
+        if (!jwtToken) {
+            this.logger.error('JWT Token not present in the request header');
+            return next();
+        }
+        try {
+            this.logger.debug(jwtToken);
+            const decodedToken = jwt.verify(jwtToken, 'your-secret-key');
+            if (decodedToken && decodedToken.instituteId) {
+                const instituteId = decodedToken.instituteId;
+                this.requestService.setInstituteId(instituteId);
+                this.logger.verbose(`Authenticated with instituteId: ${instituteId}`);
+            }
+            else {
+                this.logger.error('JWT does not contain instituteId');
+            }
+        }
+        catch (error) {
+            this.logger.error('Error decoding JWT:', error.message);
+        }
         next();
     }
 };

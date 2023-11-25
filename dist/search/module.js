@@ -15,7 +15,14 @@ const schema_1 = require("../book-institute-relation/schema");
 const repository_1 = require("./repository");
 const schema_2 = require("../books/schema");
 const repository_2 = require("../books/repository");
+const request_service_1 = require("../request.service");
+const auth_1 = require("../middleware/auth");
 let SearchModule = class SearchModule {
+    configure(consumer) {
+        consumer
+            .apply(auth_1.AuthenticationMiddleware)
+            .forRoutes({ path: "search/:text", method: common_1.RequestMethod.GET });
+    }
 };
 exports.SearchModule = SearchModule;
 exports.SearchModule = SearchModule = __decorate([
@@ -27,7 +34,7 @@ exports.SearchModule = SearchModule = __decorate([
             ]),
         ],
         controllers: [controller_1.SearchController],
-        providers: [service_1.SearchService, repository_1.SearchRepository, repository_2.BooksRepository],
+        providers: [service_1.SearchService, repository_1.SearchRepository, repository_2.BooksRepository, request_service_1.RequestService],
     })
 ], SearchModule);
 //# sourceMappingURL=module.js.map

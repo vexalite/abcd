@@ -16,7 +16,14 @@ let Authguard = Authguard_1 = class Authguard {
     canActivate(context) {
         this.logger.log(Authguard_1.name);
         const request = context.switchToHttp().getRequest();
-        return true;
+        const authorizationHeader = request.headers['authorization'];
+        if (!authorizationHeader) {
+            this.logger.error('Authorization header not present in the request');
+            return false;
+        }
+        else {
+            return true;
+        }
     }
 };
 exports.Authguard = Authguard;

@@ -13,20 +13,25 @@ exports.SearchService = void 0;
 const common_1 = require("@nestjs/common");
 const repository_1 = require("./repository");
 const repository_2 = require("../books/repository");
+const request_service_1 = require("../request.service");
 let SearchService = class SearchService {
-    constructor(booksRepository, searchRepository) {
+    constructor(requestService, booksRepository, searchRepository) {
+        this.requestService = requestService;
         this.booksRepository = booksRepository;
         this.searchRepository = searchRepository;
+        this.instituteId = this.requestService.getInstituteID();
     }
-    async universalSearch(instituteid, searchQuery) {
-        const searchResults = await this.searchRepository.universalSearch(instituteid, searchQuery);
+    async universalSearch(searchQuery) {
+        console.log(this.instituteId);
+        const searchResults = await this.searchRepository.universalSearch(this.instituteId, searchQuery);
         return searchResults;
     }
 };
 exports.SearchService = SearchService;
 exports.SearchService = SearchService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [repository_2.BooksRepository,
+    __metadata("design:paramtypes", [request_service_1.RequestService,
+        repository_2.BooksRepository,
         repository_1.SearchRepository])
 ], SearchService);
 //# sourceMappingURL=service.js.map

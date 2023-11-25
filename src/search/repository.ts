@@ -4,7 +4,6 @@ import { Model } from 'mongoose';
 import { BaseRepository } from 'src/repository';
 import { BookInstitute } from 'src/book-institute-relation/schema';
 import { Book } from 'src/books/schema';
-
 @Injectable()
 export class SearchRepository extends BaseRepository<BookInstitute> {
   constructor(
@@ -16,27 +15,22 @@ export class SearchRepository extends BaseRepository<BookInstitute> {
   }
 
   async universalSearch(id: string, searchQuery: string) {
-    console.log(`${id} + ${searchQuery}`);
     const book = await this.bookModel
       .find({
         title: { $regex: new RegExp(searchQuery, 'i') },
       })
+      // .find({
+      //   $text: { $search: searchQuery },
+      // })
       .exec();
-    const booksToCheck = [];
-    book.forEach((book) => {
-      // console.log(book._id);
-      booksToCheck.push(book.id);
-    });
+    const booksToCheck = book.map((book) => book.id);
     const foundBooksInstitutes = await this.bookInstituteModel
       .find({
-        // instituteId: id,
+        instituteId: id,
         bookId: { $in: booksToCheck },
       })
       .populate('bookId')
       .exec();
-
-    // console.log(foundBooksInstitutes);
-    // console.log(book);
     return foundBooksInstitutes;
   }
 

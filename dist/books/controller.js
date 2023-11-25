@@ -21,11 +21,14 @@ let BooksController = class BooksController {
     constructor(booksService) {
         this.booksService = booksService;
     }
-    async createBook(instituteid, isbn, body) {
-        return this.booksService.create(instituteid, isbn, body);
+    async createBook(isbn, body) {
+        return this.booksService.create(isbn, body);
+    }
+    async getInstituteBooks() {
+        return this.booksService.findInstituteBooks();
     }
     async getAllBooks() {
-        return this.booksService.findAll();
+        return this.booksService.findAllBooks();
     }
     async getBookById(id) {
         return this.booksService.findOne(id);
@@ -36,16 +39,21 @@ let BooksController = class BooksController {
 };
 exports.BooksController = BooksController;
 __decorate([
-    (0, common_1.Post)(':instituteid/:isbn'),
-    __param(0, (0, common_1.Param)('instituteid')),
-    __param(1, (0, common_1.Param)('isbn')),
-    __param(2, (0, common_1.Body)()),
+    (0, common_1.Post)(':isbn'),
+    __param(0, (0, common_1.Param)('isbn')),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, create_book_dto_1.BookDto]),
+    __metadata("design:paramtypes", [String, create_book_dto_1.BookDto]),
     __metadata("design:returntype", Promise)
 ], BooksController.prototype, "createBook", null);
 __decorate([
     (0, common_1.Get)(),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], BooksController.prototype, "getInstituteBooks", null);
+__decorate([
+    (0, common_1.Get)('all'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

@@ -47,11 +47,13 @@ import { exceptionFilter } from './filters/http-exception';
   // }
 ],
 })
-export class AppModule implements NestModule{
+export class AppModule  
+implements NestModule
+{
   configure(consumer: MiddlewareConsumer){
     consumer
     .apply(AuthenticationMiddleware)
-    // .forRoutes({ path: "/path", method: RequestMethod.GET})
-    .forRoutes('*')
+    .forRoutes({ path: "/", method: RequestMethod.GET})
+    // .forRoutes('*')
   }
 }

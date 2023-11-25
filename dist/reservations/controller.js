@@ -32,8 +32,8 @@ let ReservationsController = class ReservationsController {
     overdue(id) {
         return this.reservationsService.overdue(id);
     }
-    findAll(instituteid) {
-        return this.reservationsService.findAll(instituteid);
+    findAll() {
+        return this.reservationsService.findAll();
     }
     findOne(id) {
         return this.reservationsService.findOne(id);
@@ -70,10 +70,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ReservationsController.prototype, "overdue", null);
 __decorate([
-    (0, common_1.Get)('all/:instituteid'),
-    __param(0, (0, common_1.Param)('instituteid')),
+    (0, common_1.Get)('all'),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ReservationsController.prototype, "findAll", null);
 __decorate([

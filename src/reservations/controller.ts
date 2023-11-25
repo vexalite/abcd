@@ -1,15 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Logger } from '@nestjs/common';
 import { ReservationsService } from './service';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { FreezePipe } from 'src/pipes/freezePipe';
+import { RequestService } from 'src/request.service';
 
 @Controller('reservations')
 export class ReservationsController {
   constructor(private readonly reservationsService: ReservationsService) {}
-
   @Post()
   issueBook(@Body() body: CreateReservationDto) {
-    return this.reservationsService.issue(body);
+        return this.reservationsService.issue(body);
   }
 
   @Patch('reissue:id')
@@ -26,9 +26,9 @@ export class ReservationsController {
     return this.reservationsService.overdue(id);
   }
 
-  @Get('all/:instituteid')
-  findAll(@Param('instituteid') instituteid: string) {
-    return this.reservationsService.findAll(instituteid);
+  @Get('all')
+  findAll() {
+    return this.reservationsService.findAll();
   }
 
   @Get(':id')

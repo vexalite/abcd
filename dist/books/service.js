@@ -13,18 +13,21 @@ exports.BooksService = void 0;
 const common_1 = require("@nestjs/common");
 const repository_1 = require("./repository");
 const repository_2 = require("../book-institute-relation/repository");
+const request_service_1 = require("../request.service");
 let BooksService = class BooksService {
-    constructor(booksRepository, bookInstitutesRepository) {
+    constructor(requestService, booksRepository, bookInstitutesRepository) {
+        this.requestService = requestService;
         this.booksRepository = booksRepository;
         this.bookInstitutesRepository = bookInstitutesRepository;
+        this.instituteId = this.requestService.getInstituteID();
     }
-    async create(instituteid, isbn, body) {
+    async create(isbn, body) {
         try {
             const existingBook = await this.booksRepository.findBookByISBN(isbn);
             if (existingBook) {
                 console.log(existingBook.id);
                 const relation = {
-                    instituteId: instituteid,
+                    instituteId: this.instituteId,
                     bookId: existingBook.id,
                     quantity: body.quantity,
                 };
@@ -34,7 +37,7 @@ let BooksService = class BooksService {
             else {
                 const createBook = await this.booksRepository.create(body);
                 const relation = {
-                    instituteId: instituteid,
+                    instituteId: this.instituteId,
                     bookId: createBook.id,
                     quantity: body.quantity,
                 };
@@ -47,7 +50,17 @@ let BooksService = class BooksService {
             throw error;
         }
     }
-    async findAll() {
+    async findInstituteBooks() {
+        try {
+            const books = await this.bookInstitutesRepository.findAllBooks(this.instituteId);
+            return books;
+        }
+        catch (error) {
+            console.error(`Error in findAll:`, error.message);
+            throw error;
+        }
+    }
+    async findAllBooks() {
         try {
             const books = await this.booksRepository.findAll();
             return books;
@@ -81,7 +94,8 @@ let BooksService = class BooksService {
 exports.BooksService = BooksService;
 exports.BooksService = BooksService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [repository_1.BooksRepository,
+    __metadata("design:paramtypes", [request_service_1.RequestService,
+        repository_1.BooksRepository,
         repository_2.BookInstitutesRepository])
 ], BooksService);
 //# sourceMappingURL=service.js.map

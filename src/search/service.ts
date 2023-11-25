@@ -3,17 +3,21 @@ import { Book } from 'src/books/schema';
 import { SearchRepository } from './repository';
 import mongoose from 'mongoose';
 import { BooksRepository } from 'src/books/repository';
+import { RequestService } from 'src/request.service';
 
 @Injectable()
 export class SearchService {
+  private instituteId: string;
   constructor(
+    private readonly requestService: RequestService,
     private readonly booksRepository: BooksRepository,
     private readonly searchRepository: SearchRepository,
-  ) {}
+  ) {this.instituteId = this.requestService.getInstituteID()}
 
-  async universalSearch(instituteid: string, searchQuery: string) {
+  async universalSearch(searchQuery: string) {
+    console.log(this.instituteId)
     const searchResults = await this.searchRepository.universalSearch(
-      instituteid,
+      this.instituteId,
       searchQuery,
     );
     return searchResults;

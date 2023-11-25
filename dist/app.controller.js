@@ -12,11 +12,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const app_service_1 = require("./app.service");
+const request_service_1 = require("./request.service");
 let AppController = class AppController {
-    constructor(appService) {
+    constructor(requestService, appService) {
+        this.requestService = requestService;
         this.appService = appService;
+        this.logger = new common_1.Logger(app_service_1.AppService.name);
     }
     getHello() {
+        const instituteId = this.requestService.getInstituteID();
+        console.log(this.requestService.getInstituteID());
         return this.appService.getHello();
     }
 };
@@ -29,6 +34,7 @@ __decorate([
 ], AppController.prototype, "getHello", null);
 exports.AppController = AppController = __decorate([
     (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [app_service_1.AppService])
+    __metadata("design:paramtypes", [request_service_1.RequestService,
+        app_service_1.AppService])
 ], AppController);
 //# sourceMappingURL=app.controller.js.map

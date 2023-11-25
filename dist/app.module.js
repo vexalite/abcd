@@ -27,7 +27,7 @@ let AppModule = class AppModule {
     configure(consumer) {
         consumer
             .apply(auth_1.AuthenticationMiddleware)
-            .forRoutes('*');
+            .forRoutes({ path: "/", method: common_1.RequestMethod.GET });
     }
 };
 exports.AppModule = AppModule;

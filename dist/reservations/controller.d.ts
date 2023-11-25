@@ -7,6 +7,6 @@ export declare class ReservationsController {
     reIssueBook(id: string): Promise<string | import("./schema").Reservation>;
     returnBook(body: CreateReservationDto, id: string): Promise<string | import("./schema").Reservation>;
     overdue(id: string): Promise<number>;
-    findAll(instituteid: string): Promise<import("./schema").Reservation[]>;
+    findAll(): Promise<import("./schema").Reservation[]>;
     findOne(id: string): Promise<import("./schema").Reservation>;
 }

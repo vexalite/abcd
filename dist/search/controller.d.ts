@@ -27,7 +27,7 @@ import { SearchService } from './service';
 export declare class SearchController {
     private readonly searchService;
     constructor(searchService: SearchService);
-    universalSearch(instituteid: string, text: string): Promise<Omit<import("mongoose").Document<unknown, {}, import("../book-institute-relation/schema").BookInstitute> & import("../book-institute-relation/schema").BookInstitute & {
+    universalSearch(text: string): Promise<Omit<import("mongoose").Document<unknown, {}, import("../book-institute-relation/schema").BookInstitute> & import("../book-institute-relation/schema").BookInstitute & {
         _id: import("mongoose").Types.ObjectId;
     }, never>[]>;
 }

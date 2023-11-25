@@ -11,23 +11,28 @@ import { BooksService } from './service';
 import { BookDto } from './dto/create-book.dto';
 import { Book } from './schema';
 import { UpdateCatalogDto } from './dto/update-book.dto';
+import { BookInstitute } from 'src/book-institute-relation/schema';
 
 @Controller('books')
 export class BooksController {
   constructor(private readonly booksService: BooksService) {}
 
-  @Post(':instituteid/:isbn')
+  @Post(':isbn')
   async createBook(
-    @Param('instituteid') instituteid: string,
     @Param('isbn') isbn: string,
     @Body() body: BookDto,
   ): Promise<Book> {
-    return this.booksService.create(instituteid, isbn, body);
+    return this.booksService.create(isbn, body);
   }
 
   @Get()
+  async getInstituteBooks(): Promise<BookInstitute[]> {
+    return this.booksService.findInstituteBooks();
+  }
+
+  @Get('all')
   async getAllBooks(): Promise<Book[]> {
-    return this.booksService.findAll();
+    return this.booksService.findAllBooks();
   }
 
   @Get(':id')
@@ -42,6 +47,7 @@ export class BooksController {
   ): Promise<Book | null> {
     return this.booksService.update(id, updateCatalogDto);
   }
+
 
   // @Delete(':id')
   // async removeBook(@Param('id') id: string): Promise<void> {

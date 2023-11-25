@@ -13,15 +13,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
 const request_service_1 = require("./request.service");
+const jwt = require("jsonwebtoken");
 let AppService = AppService_1 = class AppService {
     constructor(requestService) {
         this.requestService = requestService;
         this.logger = new common_1.Logger(AppService_1.name);
+        this.secretKey = 'your-secret-key';
     }
     getHello() {
-        const instituteId = this.requestService.getInstituteID();
-        this.logger.log(`getHello instituteId: ${instituteId}`);
         return 'Hello World!';
+    }
+    generateToken(instituteId) {
+        const payload = { instituteId };
+        return jwt.sign(payload, this.secretKey);
     }
 };
 exports.AppService = AppService;

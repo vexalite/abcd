@@ -8,12 +8,12 @@ export class LoggingInterceptor implements NestInterceptor {
 
     constructor(private readonly requestService: RequestService) {}
 
-    intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
+     intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
         const request = context.switchToHttp().getRequest()
         const userAgent = request.get('user-agent') || ''
         const {ip, method, path: url} = request
 
-        this.logger.log(`
+        this.logger.verbose(`
         ${method} ${url} ${userAgent} ${ip}: ${context.getClass().name} ${context.getHandler().name} invoked...`)
 
         this.logger.debug('instituteId:', this.requestService.getInstituteID())
@@ -25,7 +25,7 @@ export class LoggingInterceptor implements NestInterceptor {
                 const { statusCode } = response
                 const contentLength = response.get('content-length')
 
-                this.logger.log(`
+                this.logger.verbose(`
                 ${method} ${url} ${statusCode} ${contentLength} - ${userAgent} ${ip}: ${Date.now()- now}ms`)
 
                 // this.logger.debug('Response:', res)

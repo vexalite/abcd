@@ -24,18 +24,15 @@ let SearchRepository = class SearchRepository extends repository_1.BaseRepositor
         this.bookInstituteModel = bookInstituteModel;
     }
     async universalSearch(id, searchQuery) {
-        console.log(`${id} + ${searchQuery}`);
         const book = await this.bookModel
             .find({
             title: { $regex: new RegExp(searchQuery, 'i') },
         })
             .exec();
-        const booksToCheck = [];
-        book.forEach((book) => {
-            booksToCheck.push(book.id);
-        });
+        const booksToCheck = book.map((book) => book.id);
         const foundBooksInstitutes = await this.bookInstituteModel
             .find({
+            instituteId: id,
             bookId: { $in: booksToCheck },
         })
             .populate('bookId')

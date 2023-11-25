@@ -23,7 +23,7 @@ let LoggingInterceptor = LoggingInterceptor_1 = class LoggingInterceptor {
         const request = context.switchToHttp().getRequest();
         const userAgent = request.get('user-agent') || '';
         const { ip, method, path: url } = request;
-        this.logger.log(`
+        this.logger.verbose(`
         ${method} ${url} ${userAgent} ${ip}: ${context.getClass().name} ${context.getHandler().name} invoked...`);
         this.logger.debug('instituteId:', this.requestService.getInstituteID());
         const now = Date.now();
@@ -31,7 +31,7 @@ let LoggingInterceptor = LoggingInterceptor_1 = class LoggingInterceptor {
             const response = context.switchToHttp().getResponse();
             const { statusCode } = response;
             const contentLength = response.get('content-length');
-            this.logger.log(`
+            this.logger.verbose(`
                 ${method} ${url} ${statusCode} ${contentLength} - ${userAgent} ${ip}: ${Date.now() - now}ms`);
         }));
     }

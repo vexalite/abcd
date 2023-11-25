@@ -19,18 +19,17 @@ let SearchController = class SearchController {
     constructor(searchService) {
         this.searchService = searchService;
     }
-    async universalSearch(instituteid, text) {
-        const books = await this.searchService.universalSearch(instituteid, text);
+    async universalSearch(text) {
+        const books = await this.searchService.universalSearch(text);
         return books;
     }
 };
 exports.SearchController = SearchController;
 __decorate([
-    (0, common_1.Get)('universal/:instituteid/:text'),
-    __param(0, (0, common_1.Param)('instituteid')),
-    __param(1, (0, common_1.Param)('text')),
+    (0, common_1.Get)(':text'),
+    __param(0, (0, common_1.Param)('text')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], SearchController.prototype, "universalSearch", null);
 exports.SearchController = SearchController = __decorate([

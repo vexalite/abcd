@@ -4,4 +4,6 @@ export declare class AppService {
     private readonly logger;
     constructor(requestService: RequestService);
     getHello(): string;
+    private readonly secretKey;
+    generateToken(instituteId: string): string;
 }

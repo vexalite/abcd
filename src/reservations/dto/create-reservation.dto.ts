@@ -18,9 +18,6 @@ export class CreateReservationDto {
   @IsMongoId()
   bookId!: Types.ObjectId | string;
 
-  @IsString()
-  instituteId!: string;
-
   @IsEnum(['issued', 'returned'])
   status!: 'issued' | 'returned';
 

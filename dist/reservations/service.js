@@ -14,37 +14,47 @@ const common_1 = require("@nestjs/common");
 const repository_1 = require("./repository");
 const repository_2 = require("../book-institute-relation/repository");
 const repository_3 = require("../instituteSettings/repository");
+const request_service_1 = require("../request.service");
 let ReservationsService = class ReservationsService {
-    constructor(reservationRepository, bookInstitutesRepository, instituteSettingRepository) {
+    constructor(requestService, reservationRepository, bookInstitutesRepository, instituteSettingRepository) {
+        this.requestService = requestService;
         this.reservationRepository = reservationRepository;
         this.bookInstitutesRepository = bookInstitutesRepository;
         this.instituteSettingRepository = instituteSettingRepository;
+        this.instituteId = this.requestService.getInstituteID();
     }
     async issue(body) {
         try {
+            console.log(this.instituteId);
             const getQuantity = await this.bookInstitutesRepository.findOne({
                 bookId: body.bookId,
-                instituteId: body.instituteId,
+                instituteId: this.instituteId,
             });
             const getIssued = await this.reservationRepository.findMultiple({
                 bookId: body.bookId,
-                instituteId: body.instituteId,
+                instituteId: this.instituteId,
             });
             const checkAvailability = getQuantity.quantity - getIssued.length;
             const getBorrowingPeriod = await this.instituteSettingRepository.findOne({
-                instituteId: body.instituteId,
+                instituteId: this.instituteId,
             });
             if (checkAvailability > 0) {
                 if (body.patronType === 'student') {
                     body.dueDate = new Date();
                     body.dueDate.setDate(body.dueDate.getDate() + getBorrowingPeriod.student.borrowingPeriod);
-                    const createdReservation = await this.reservationRepository.create(body);
+                    const createdReservation = await this.reservationRepository.create({
+                        ...body,
+                        instituteId: this.instituteId,
+                    });
                     return createdReservation;
                 }
                 else {
                     body.dueDate = new Date();
                     body.dueDate.setDate(body.dueDate.getDate() + getBorrowingPeriod.employee.borrowingPeriod);
-                    const createdReservation = await this.reservationRepository.create(body);
+                    const createdReservation = await this.reservationRepository.create({
+                        ...body,
+                        instituteId: this.instituteId,
+                    });
                     return createdReservation;
                 }
             }
@@ -107,9 +117,9 @@ let ReservationsService = class ReservationsService {
             return overdueCharges;
         }
     }
-    async findAll(id) {
-        console.log(id);
-        const allReservations = await this.reservationRepository.findAllReservation(id);
+    async findAll() {
+        console.log(this.instituteId);
+        const allReservations = await this.reservationRepository.findAllReservation(this.instituteId);
         return allReservations;
     }
     async findOne(id) {
@@ -120,7 +130,8 @@ let ReservationsService = class ReservationsService {
 exports.ReservationsService = ReservationsService;
 exports.ReservationsService = ReservationsService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [repository_1.ReservationRepository,
+    __metadata("design:paramtypes", [request_service_1.RequestService,
+        repository_1.ReservationRepository,
         repository_2.BookInstitutesRepository,
         repository_3.InstituteSettingRepository])
 ], ReservationsService);

@@ -17,7 +17,14 @@ const repository_2 = require("../book-institute-relation/repository");
 const schema_2 = require("../book-institute-relation/schema");
 const schema_3 = require("../instituteSettings/schema");
 const repository_3 = require("../instituteSettings/repository");
+const request_service_1 = require("../request.service");
+const auth_1 = require("../middleware/auth");
 let ReservationsModule = class ReservationsModule {
+    configure(consumer) {
+        consumer
+            .apply(auth_1.AuthenticationMiddleware)
+            .forRoutes({ path: "reservations/all", method: common_1.RequestMethod.GET }, { path: "reservations", method: common_1.RequestMethod.POST });
+    }
 };
 exports.ReservationsModule = ReservationsModule;
 exports.ReservationsModule = ReservationsModule = __decorate([
@@ -39,6 +46,7 @@ exports.ReservationsModule = ReservationsModule = __decorate([
             repository_1.ReservationRepository,
             repository_2.BookInstitutesRepository,
             repository_3.InstituteSettingRepository,
+            request_service_1.RequestService
         ],
     })
 ], ReservationsModule);

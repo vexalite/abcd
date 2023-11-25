@@ -18,9 +18,11 @@ let exceptionFilter = exceptionFilter_1 = class exceptionFilter {
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
-        const status = exception.getStatus();
+        const status = exception && typeof exception.getStatus === 'function' ? exception.getStatus() : 500;
+        const message = exception.message || 'Internal Server Error';
         response.status(status).json({
             statusCode: status,
+            message: message,
             timestamp: new Date().toISOString(),
             path: request.url
         });

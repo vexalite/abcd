@@ -27,10 +27,6 @@ __decorate([
     __metadata("design:type", Object)
 ], CreateReservationDto.prototype, "bookId", void 0);
 __decorate([
-    (0, class_validator_1.IsString)(),
-    __metadata("design:type", String)
-], CreateReservationDto.prototype, "instituteId", void 0);
-__decorate([
     (0, class_validator_1.IsEnum)(['issued', 'returned']),
     __metadata("design:type", String)
 ], CreateReservationDto.prototype, "status", void 0);
