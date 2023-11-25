@@ -104,6 +104,7 @@ export class ReservationsService {
       return createdReservation;
     }
   }
+
   async returnBook(
     body: CreateReservationDto,
     id: string,
@@ -147,6 +148,18 @@ export class ReservationsService {
   async findAll(): Promise<Reservation[]> {
     console.log(this.instituteId)
     const allReservations = await this.reservationRepository.findAllReservation(this.instituteId);
+    return allReservations;
+  }
+
+  async findAllByBook(bookid: string): Promise<Reservation[]> {
+    console.log(this.instituteId)
+    const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid);
+    return allReservations;
+  }
+
+  async findAllByPatron(patronid: string): Promise<Reservation[]> {
+    console.log(this.instituteId)
+    const allReservations = await this.reservationRepository.findReservationByPatron(this.instituteId, patronid);
     return allReservations;
   }
 

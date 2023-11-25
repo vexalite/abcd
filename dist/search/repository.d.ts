@@ -23,7 +23,7 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Model } from 'mongoose';
-import { BaseRepository } from 'src/repository';
+import { BaseRepository } from 'src/baseRepository';
 import { BookInstitute } from 'src/book-institute-relation/schema';
 import { Book } from 'src/books/schema';
 export declare class SearchRepository extends BaseRepository<BookInstitute> {

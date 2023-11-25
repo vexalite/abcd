@@ -26,6 +26,16 @@ export class ReservationsController {
     return this.reservationsService.overdue(id);
   }
 
+  @Get('book/:bookid')
+  findByBook(@Param('bookid') bookid: string) {
+    return this.reservationsService.findAllByBook(bookid);
+  }
+
+  @Get('patron/:patronid')
+  findByPatron(@Param('patronid') patronid: string) {
+    return this.reservationsService.findAllByPatron(patronid);
+  }
+
   @Get('all')
   findAll() {
     return this.reservationsService.findAll();

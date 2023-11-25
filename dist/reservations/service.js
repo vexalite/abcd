@@ -122,6 +122,16 @@ let ReservationsService = class ReservationsService {
         const allReservations = await this.reservationRepository.findAllReservation(this.instituteId);
         return allReservations;
     }
+    async findAllByBook(bookid) {
+        console.log(this.instituteId);
+        const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid);
+        return allReservations;
+    }
+    async findAllByPatron(patronid) {
+        console.log(this.instituteId);
+        const allReservations = await this.reservationRepository.findReservationByPatron(this.instituteId, patronid);
+        return allReservations;
+    }
     async findOne(id) {
         const reservations = await this.reservationRepository.findById(id);
         return reservations;

@@ -16,8 +16,8 @@ exports.BooksRepository = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const repository_1 = require("../repository");
-let BooksRepository = class BooksRepository extends repository_1.BaseRepository {
+const baseRepository_1 = require("../baseRepository");
+let BooksRepository = class BooksRepository extends baseRepository_1.BaseRepository {
     constructor(bookModel, bookInstituteModel) {
         super(bookModel);
         this.bookModel = bookModel;

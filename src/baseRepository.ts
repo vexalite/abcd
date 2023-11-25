@@ -34,6 +34,24 @@ export class BaseRepository<T extends Document> {
       .exec();
   }
 
+  async findReservationByBook(id: string, bookid: string): Promise<T[]> {
+    return this.model
+      .find({
+        instituteId: id,
+        bookId: bookid
+      })
+      .populate('bookId')
+      .exec();
+  }
+  async findReservationByPatron(id: string, patronid: string): Promise<T[]> {
+    return this.model
+      .find({
+        instituteId: id,
+        patronId: patronid
+      })
+      .populate('bookId')
+      .exec();
+  }
   async findAllBooks(id: string): Promise<T[]> {
     return this.model
       .find({

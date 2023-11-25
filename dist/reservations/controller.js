@@ -32,6 +32,12 @@ let ReservationsController = class ReservationsController {
     overdue(id) {
         return this.reservationsService.overdue(id);
     }
+    findByBook(bookid) {
+        return this.reservationsService.findAllByBook(bookid);
+    }
+    findByPatron(patronid) {
+        return this.reservationsService.findAllByPatron(patronid);
+    }
     findAll() {
         return this.reservationsService.findAll();
     }
@@ -69,6 +75,20 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ReservationsController.prototype, "overdue", null);
+__decorate([
+    (0, common_1.Get)('book/:bookid'),
+    __param(0, (0, common_1.Param)('bookid')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ReservationsController.prototype, "findByBook", null);
+__decorate([
+    (0, common_1.Get)('patron/:patronid'),
+    __param(0, (0, common_1.Param)('patronid')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ReservationsController.prototype, "findByPatron", null);
 __decorate([
     (0, common_1.Get)('all'),
     __metadata("design:type", Function),

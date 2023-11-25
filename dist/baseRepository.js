@@ -30,6 +30,24 @@ class BaseRepository {
             .populate('bookId')
             .exec();
     }
+    async findReservationByBook(id, bookid) {
+        return this.model
+            .find({
+            instituteId: id,
+            bookId: bookid
+        })
+            .populate('bookId')
+            .exec();
+    }
+    async findReservationByPatron(id, patronid) {
+        return this.model
+            .find({
+            instituteId: id,
+            patronId: patronid
+        })
+            .populate('bookId')
+            .exec();
+    }
     async findAllBooks(id) {
         return this.model
             .find({
@@ -62,4 +80,4 @@ class BaseRepository {
     }
 }
 exports.BaseRepository = BaseRepository;
-//# sourceMappingURL=repository.js.map
+//# sourceMappingURL=baseRepository.js.map
