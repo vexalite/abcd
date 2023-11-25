@@ -153,13 +153,29 @@ export class ReservationsService {
 
   async findAllByBook(bookid: string): Promise<Reservation[]> {
     console.log(this.instituteId)
-    const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid);
+    const status = 'issued'
+    const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid, status);
     return allReservations;
   }
 
   async findAllByPatron(patronid: string): Promise<Reservation[]> {
     console.log(this.instituteId)
-    const allReservations = await this.reservationRepository.findReservationByPatron(this.instituteId, patronid);
+    const status = 'issued'
+    const allReservations = await this.reservationRepository.findReservationByPatron(this.instituteId, patronid, status);
+    return allReservations;
+  }
+
+  async findHistoryByBook(bookid: string): Promise<Reservation[]> {
+    console.log(this.instituteId)
+    const status = 'returned'
+    const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid, status);
+    return allReservations;
+  }
+
+  async findHistoryByPatron(patronid: string): Promise<Reservation[]> {
+    console.log(this.instituteId)
+    const status = 'returned'
+    const allReservations = await this.reservationRepository.findReservationByPatron(this.instituteId, patronid, status);
     return allReservations;
   }
 

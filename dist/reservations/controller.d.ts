@@ -9,6 +9,8 @@ export declare class ReservationsController {
     overdue(id: string): Promise<number>;
     findByBook(bookid: string): Promise<import("./schema").Reservation[]>;
     findByPatron(patronid: string): Promise<import("./schema").Reservation[]>;
+    findBookHistory(bookid: string): Promise<import("./schema").Reservation[]>;
+    findPatronHistory(patronid: string): Promise<import("./schema").Reservation[]>;
     findAll(): Promise<import("./schema").Reservation[]>;
     findOne(id: string): Promise<import("./schema").Reservation>;
 }

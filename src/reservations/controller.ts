@@ -36,6 +36,15 @@ export class ReservationsController {
     return this.reservationsService.findAllByPatron(patronid);
   }
 
+  @Get('h/book/:bookid')
+  findBookHistory(@Param('bookid') bookid: string) {
+    return this.reservationsService.findHistoryByBook(bookid);
+  }
+
+  @Get('h/patron/:patronid')
+  findPatronHistory(@Param('patronid') patronid: string) {
+    return this.reservationsService.findHistoryByPatron(patronid);
+  }
   @Get('all')
   findAll() {
     return this.reservationsService.findAll();

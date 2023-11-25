@@ -7,8 +7,8 @@ export declare class BaseRepository<T extends Document> {
     findByIdAndPopulate(id: string): Promise<T | null>;
     findAll(): Promise<T[]>;
     findAllReservation(id: string): Promise<T[]>;
-    findReservationByBook(id: string, bookid: string): Promise<T[]>;
-    findReservationByPatron(id: string, patronid: string): Promise<T[]>;
+    findReservationByBook(id: string, bookid: string, status: string): Promise<T[]>;
+    findReservationByPatron(id: string, patronid: string, status: string): Promise<T[]>;
     findAllBooks(id: string): Promise<T[]>;
     update(id: string, item: Partial<T>): Promise<T>;
     delete(id: string): Promise<T>;

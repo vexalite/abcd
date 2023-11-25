@@ -18,5 +18,7 @@ export declare class ReservationsService {
     findAll(): Promise<Reservation[]>;
     findAllByBook(bookid: string): Promise<Reservation[]>;
     findAllByPatron(patronid: string): Promise<Reservation[]>;
+    findHistoryByBook(bookid: string): Promise<Reservation[]>;
+    findHistoryByPatron(patronid: string): Promise<Reservation[]>;
     findOne(id: string): Promise<Reservation>;
 }

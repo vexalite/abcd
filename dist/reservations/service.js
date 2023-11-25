@@ -124,12 +124,26 @@ let ReservationsService = class ReservationsService {
     }
     async findAllByBook(bookid) {
         console.log(this.instituteId);
-        const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid);
+        const status = 'issued';
+        const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid, status);
         return allReservations;
     }
     async findAllByPatron(patronid) {
         console.log(this.instituteId);
-        const allReservations = await this.reservationRepository.findReservationByPatron(this.instituteId, patronid);
+        const status = 'issued';
+        const allReservations = await this.reservationRepository.findReservationByPatron(this.instituteId, patronid, status);
+        return allReservations;
+    }
+    async findHistoryByBook(bookid) {
+        console.log(this.instituteId);
+        const status = 'returned';
+        const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid, status);
+        return allReservations;
+    }
+    async findHistoryByPatron(patronid) {
+        console.log(this.instituteId);
+        const status = 'returned';
+        const allReservations = await this.reservationRepository.findReservationByPatron(this.instituteId, patronid, status);
         return allReservations;
     }
     async findOne(id) {

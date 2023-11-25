@@ -38,6 +38,12 @@ let ReservationsController = class ReservationsController {
     findByPatron(patronid) {
         return this.reservationsService.findAllByPatron(patronid);
     }
+    findBookHistory(bookid) {
+        return this.reservationsService.findHistoryByBook(bookid);
+    }
+    findPatronHistory(patronid) {
+        return this.reservationsService.findHistoryByPatron(patronid);
+    }
     findAll() {
         return this.reservationsService.findAll();
     }
@@ -89,6 +95,20 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ReservationsController.prototype, "findByPatron", null);
+__decorate([
+    (0, common_1.Get)('h/book/:bookid'),
+    __param(0, (0, common_1.Param)('bookid')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ReservationsController.prototype, "findBookHistory", null);
+__decorate([
+    (0, common_1.Get)('h/patron/:patronid'),
+    __param(0, (0, common_1.Param)('patronid')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ReservationsController.prototype, "findPatronHistory", null);
 __decorate([
     (0, common_1.Get)('all'),
     __metadata("design:type", Function),
