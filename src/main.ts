@@ -6,7 +6,7 @@ import { CustomLogger } from './overrideLog';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule,
     {
-      logger: ['error', 'warn','fatal', 'error', 'warn', 'debug', 'verbose'],
+      logger: ['error', 'warn','fatal', 'log', 'warn', 'debug', 'verbose'],
     }
     // , { logger: new CustomLogger() }
     );

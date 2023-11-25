@@ -30,6 +30,7 @@ export class BaseRepository<T extends Document> {
       .find({
         instituteId: id,
       })
+      .populate('bookId')
       .exec();
   }
 

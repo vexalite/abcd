@@ -27,6 +27,7 @@ class BaseRepository {
             .find({
             instituteId: id,
         })
+            .populate('bookId')
             .exec();
     }
     async findAllBooks(id) {

@@ -5,7 +5,7 @@ const app_module_1 = require("./app.module");
 const common_1 = require("@nestjs/common");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule, {
-        logger: ['error', 'warn', 'fatal', 'error', 'warn', 'debug', 'verbose'],
+        logger: ['error', 'warn', 'fatal', 'log', 'warn', 'debug', 'verbose'],
     });
     const logger = new common_1.Logger();
     await app.listen(process.env.PORT || 3000, "0.0.0.0");
