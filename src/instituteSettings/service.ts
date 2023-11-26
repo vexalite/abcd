@@ -3,23 +3,26 @@ import { CreateInstituteDto } from './dto/create-institute.dto';
 import { UpdateInstituteDto } from './dto/update-institute.dto';
 import { InstituteSetting } from './schema';
 import { InstituteSettingRepository } from './repository';
+import { RequestService } from 'src/request.service';
 
 @Injectable()
 export class InstituteService {
+  private instituteId: string;
   constructor(
+    private readonly requestService: RequestService,
     private readonly instituteSettingRepository: InstituteSettingRepository,
-  ) {}
+  ) {this.instituteId = this.requestService.getInstituteID()}
 
   async create(
-    createInstituteDto: CreateInstituteDto,
-  ): Promise<InstituteSetting> {
+    createInstituteDto,
+  ) {
     const createdInstitute =
       await this.instituteSettingRepository.create(createInstituteDto);
     return createdInstitute;
   }
 
-  async findAll(): Promise<InstituteSetting[]> {
-    const allInstitutes = await this.instituteSettingRepository.findAll();
+  async findInstituteSetting(): Promise<InstituteSetting[]> {
+    const allInstitutes = await this.instituteSettingRepository.findAllByInstitute(this.instituteId);
     return allInstitutes;
   }
 

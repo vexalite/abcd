@@ -18,6 +18,8 @@ const repository_2 = require("../book-institute-relation/repository");
 const schema_2 = require("../book-institute-relation/schema");
 const auth_1 = require("../middleware/auth");
 const request_service_1 = require("../request.service");
+const repository_3 = require("../instituteSettings/repository");
+const schema_3 = require("../instituteSettings/schema");
 let BooksModule = class BooksModule {
     configure(consumer) {
         consumer
@@ -33,6 +35,9 @@ exports.BooksModule = BooksModule = __decorate([
             mongoose_1.MongooseModule.forFeature([
                 { name: 'BookInstitute', schema: schema_2.BookInstituteSchema },
             ]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: 'instituteSettings', schema: schema_3.InstituteSettingsSchema },
+            ])
         ],
         controllers: [controller_1.BooksController],
         providers: [
@@ -40,6 +45,7 @@ exports.BooksModule = BooksModule = __decorate([
             repository_1.BooksRepository,
             service_2.BookInstitutesService,
             repository_2.BookInstitutesRepository,
+            repository_3.InstituteSettingRepository,
             request_service_1.RequestService
         ],
     })

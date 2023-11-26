@@ -30,11 +30,14 @@ let ReservationsService = class ReservationsService {
                 bookId: body.bookId,
                 instituteId: this.instituteId,
             });
+            console.log(getQuantity.quantity);
             const getIssued = await this.reservationRepository.findMultiple({
                 bookId: body.bookId,
                 instituteId: this.instituteId,
             });
+            console.log(getIssued.length);
             const checkAvailability = getQuantity.quantity - getIssued.length;
+            console.log(`available -- ${checkAvailability}`);
             const getBorrowingPeriod = await this.instituteSettingRepository.findOne({
                 instituteId: this.instituteId,
             });
@@ -119,11 +122,23 @@ let ReservationsService = class ReservationsService {
     }
     async findAll() {
         console.log(this.instituteId);
-        const allReservations = await this.reservationRepository.findAllReservation(this.instituteId);
+        const allReservations = await this.reservationRepository.findAllByInstitute(this.instituteId);
         return allReservations;
     }
     async findAllByBook(bookid) {
         console.log(this.instituteId);
+        const getQuantity = await this.bookInstitutesRepository.findOne({
+            bookId: bookid,
+            instituteId: this.instituteId,
+        });
+        console.log(getQuantity.quantity);
+        const getIssued = await this.reservationRepository.findMultiple({
+            bookId: bookid,
+            instituteId: this.instituteId,
+        });
+        console.log(getIssued.length);
+        const checkAvailability = getQuantity.quantity - getIssued.length;
+        console.log(checkAvailability);
         const status = 'issued';
         const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid, status);
         return allReservations;

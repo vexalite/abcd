@@ -22,7 +22,7 @@ class BaseRepository {
     async findAll() {
         return this.model.find().exec();
     }
-    async findAllReservation(id) {
+    async findAllByInstitute(id) {
         return this.model
             .find({
             instituteId: id,

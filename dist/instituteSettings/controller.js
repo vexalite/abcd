@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.InstituteController = void 0;
 const common_1 = require("@nestjs/common");
 const service_1 = require("./service");
-const create_institute_dto_1 = require("./dto/create-institute.dto");
 const update_institute_dto_1 = require("./dto/update-institute.dto");
 let InstituteController = class InstituteController {
     constructor(instituteService) {
@@ -24,8 +23,8 @@ let InstituteController = class InstituteController {
     create(body) {
         return this.instituteService.create(body);
     }
-    findAll() {
-        return this.instituteService.findAll();
+    findInstituteSetting() {
+        return this.instituteService.findInstituteSetting();
     }
     findOne(id) {
         return this.instituteService.findOne(id);
@@ -39,7 +38,7 @@ __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_institute_dto_1.CreateInstituteDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], InstituteController.prototype, "create", null);
 __decorate([
@@ -47,7 +46,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], InstituteController.prototype, "findAll", null);
+], InstituteController.prototype, "findInstituteSetting", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

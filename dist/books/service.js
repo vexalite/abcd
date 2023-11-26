@@ -14,15 +14,24 @@ const common_1 = require("@nestjs/common");
 const repository_1 = require("./repository");
 const repository_2 = require("../book-institute-relation/repository");
 const request_service_1 = require("../request.service");
+const repository_3 = require("../instituteSettings/repository");
 let BooksService = class BooksService {
-    constructor(requestService, booksRepository, bookInstitutesRepository) {
+    constructor(requestService, booksRepository, instituteSettingRepository, bookInstitutesRepository) {
         this.requestService = requestService;
         this.booksRepository = booksRepository;
+        this.instituteSettingRepository = instituteSettingRepository;
         this.bookInstitutesRepository = bookInstitutesRepository;
         this.instituteId = this.requestService.getInstituteID();
     }
     async create(isbn, body) {
         try {
+            const existingSetting = await this.instituteSettingRepository.findAllByInstitute(this.instituteId);
+            if (!existingSetting) {
+                const createdInstitute = await this.instituteSettingRepository.create({ instituteId: this.instituteId });
+            }
+            else {
+                console.log(`setting exists`);
+            }
             const existingBook = await this.booksRepository.findBookByISBN(isbn);
             if (existingBook) {
                 console.log(existingBook.id);
@@ -96,6 +105,7 @@ exports.BooksService = BooksService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [request_service_1.RequestService,
         repository_1.BooksRepository,
+        repository_3.InstituteSettingRepository,
         repository_2.BookInstitutesRepository])
 ], BooksService);
 //# sourceMappingURL=service.js.map

@@ -7,6 +7,7 @@ import { BookInstitutesRepository } from 'src/book-institute-relation/repository
 import { CreateBookInstituteRelationDto } from 'src/book-institute-relation/dto/create-book-institute-relation.dto';
 import { RequestService } from 'src/request.service';
 import { BookInstitute } from 'src/book-institute-relation/schema';
+import { InstituteSettingRepository } from 'src/instituteSettings/repository';
 
 @Injectable()
 export class BooksService {
@@ -14,6 +15,7 @@ export class BooksService {
   constructor(
     private readonly requestService: RequestService,
     private readonly booksRepository: BooksRepository,
+    private readonly instituteSettingRepository: InstituteSettingRepository,
     private readonly bookInstitutesRepository: BookInstitutesRepository,
   ) {this.instituteId = this.requestService.getInstituteID()}
 
@@ -22,6 +24,13 @@ export class BooksService {
     body: BookDto,
   ): Promise<Book> {
     try {
+      const existingSetting = await this.instituteSettingRepository.findAllByInstitute(this.instituteId)
+      if(!existingSetting){
+        const createdInstitute =
+      await this.instituteSettingRepository.create({instituteId: this.instituteId})
+      }else{
+        console.log(`setting exists`)
+      }
       const existingBook = await this.booksRepository.findBookByISBN(isbn);
       if (existingBook) {
         console.log(existingBook.id);

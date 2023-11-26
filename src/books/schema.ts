@@ -67,10 +67,10 @@ export class Books extends Document {
     thickness?: number;
   };
 
-  @Prop({ required: true, index: true })
+  @Prop({ index: true })
   mainCategory!: string;
 
-  @Prop({ index: true })
+  @Prop({ required: true, index: true })
   categories?: string[];
 
   @Prop()

@@ -48,11 +48,11 @@ __decorate([
     __metadata("design:type", Object)
 ], Books.prototype, "dimensions", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true, index: true }),
+    (0, mongoose_1.Prop)({ index: true }),
     __metadata("design:type", String)
 ], Books.prototype, "mainCategory", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ index: true }),
+    (0, mongoose_1.Prop)({ required: true, index: true }),
     __metadata("design:type", Array)
 ], Books.prototype, "categories", void 0);
 __decorate([

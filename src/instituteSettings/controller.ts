@@ -8,13 +8,13 @@ export class InstituteController {
   constructor(private readonly instituteService: InstituteService) {}
 
   @Post()
-  create(@Body() body: CreateInstituteDto) {
+  create(@Body() body) {
     return this.instituteService.create(body);
   }
 
   @Get()
-  findAll() {
-    return this.instituteService.findAll();
+  findInstituteSetting() {
+    return this.instituteService.findInstituteSetting();
   }
 
   @Get(':id')

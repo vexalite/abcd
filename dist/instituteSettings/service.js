@@ -12,16 +12,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.InstituteService = void 0;
 const common_1 = require("@nestjs/common");
 const repository_1 = require("./repository");
+const request_service_1 = require("../request.service");
 let InstituteService = class InstituteService {
-    constructor(instituteSettingRepository) {
+    constructor(requestService, instituteSettingRepository) {
+        this.requestService = requestService;
         this.instituteSettingRepository = instituteSettingRepository;
+        this.instituteId = this.requestService.getInstituteID();
     }
     async create(createInstituteDto) {
         const createdInstitute = await this.instituteSettingRepository.create(createInstituteDto);
         return createdInstitute;
     }
-    async findAll() {
-        const allInstitutes = await this.instituteSettingRepository.findAll();
+    async findInstituteSetting() {
+        const allInstitutes = await this.instituteSettingRepository.findAllByInstitute(this.instituteId);
         return allInstitutes;
     }
     async findOne(id) {
@@ -40,6 +43,7 @@ let InstituteService = class InstituteService {
 exports.InstituteService = InstituteService;
 exports.InstituteService = InstituteService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [repository_1.InstituteSettingRepository])
+    __metadata("design:paramtypes", [request_service_1.RequestService,
+        repository_1.InstituteSettingRepository])
 ], InstituteService);
 //# sourceMappingURL=service.js.map

@@ -13,7 +13,14 @@ const controller_1 = require("./controller");
 const mongoose_1 = require("@nestjs/mongoose");
 const schema_1 = require("./schema");
 const repository_1 = require("./repository");
+const auth_1 = require("../middleware/auth");
+const request_service_1 = require("../request.service");
 let InstituteSettingsModule = class InstituteSettingsModule {
+    configure(consumer) {
+        consumer
+            .apply(auth_1.AuthenticationMiddleware)
+            .forRoutes({ path: "institute", method: common_1.RequestMethod.GET });
+    }
 };
 exports.InstituteSettingsModule = InstituteSettingsModule;
 exports.InstituteSettingsModule = InstituteSettingsModule = __decorate([
@@ -24,7 +31,7 @@ exports.InstituteSettingsModule = InstituteSettingsModule = __decorate([
             ]),
         ],
         controllers: [controller_1.InstituteController],
-        providers: [service_1.InstituteService, repository_1.InstituteSettingRepository],
+        providers: [service_1.InstituteService, repository_1.InstituteSettingRepository, request_service_1.RequestService],
     })
 ], InstituteSettingsModule);
 //# sourceMappingURL=module.js.map

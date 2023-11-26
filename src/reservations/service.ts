@@ -25,16 +25,16 @@ export class ReservationsService {
       bookId: body.bookId,
       instituteId: this.instituteId,
     });
-    // console.log(getQuantity.quantity);
+    console.log(getQuantity.quantity);
 
     const getIssued = await this.reservationRepository.findMultiple({
       bookId: body.bookId,
       instituteId: this.instituteId,
     });
-    // console.log(getIssued.length);
+    console.log(getIssued.length);
 
     const checkAvailability = getQuantity.quantity - getIssued.length;
-    // console.log(`available -- ${checkAvailability}`);
+    console.log(`available -- ${checkAvailability}`);
 
     const getBorrowingPeriod = await this.instituteSettingRepository.findOne({
       instituteId: this.instituteId,
@@ -72,6 +72,7 @@ export class ReservationsService {
     } else {
       return `unfortunately!, this book is not available`;
     }
+ 
   }catch(err){
     console.log(err)
   }
@@ -147,12 +148,26 @@ export class ReservationsService {
 
   async findAll(): Promise<Reservation[]> {
     console.log(this.instituteId)
-    const allReservations = await this.reservationRepository.findAllReservation(this.instituteId);
+    const allReservations = await this.reservationRepository.findAllByInstitute(this.instituteId);
     return allReservations;
   }
 
   async findAllByBook(bookid: string): Promise<Reservation[]> {
     console.log(this.instituteId)
+    const getQuantity = await this.bookInstitutesRepository.findOne({
+      bookId: bookid,
+      instituteId: this.instituteId,
+    });
+    console.log(getQuantity.quantity);
+
+    const getIssued = await this.reservationRepository.findMultiple({
+      bookId: bookid,
+      instituteId: this.instituteId,
+    });
+    console.log(getIssued.length);
+
+    const checkAvailability = getQuantity.quantity - getIssued.length
+console.log(checkAvailability)
     const status = 'issued'
     const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid, status);
     return allReservations;

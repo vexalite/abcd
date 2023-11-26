@@ -9,6 +9,8 @@ import { BookInstitutesRepository } from 'src/book-institute-relation/repository
 import { BookInstituteSchema } from 'src/book-institute-relation/schema';
 import { AuthenticationMiddleware } from 'src/middleware/auth';
 import { RequestService } from 'src/request.service';
+import { InstituteSettingRepository } from 'src/instituteSettings/repository';
+import { InstituteSettingsSchema } from 'src/instituteSettings/schema';
 
 @Module({
   imports: [
@@ -16,6 +18,9 @@ import { RequestService } from 'src/request.service';
     MongooseModule.forFeature([
       { name: 'BookInstitute', schema: BookInstituteSchema },
     ]),
+    MongooseModule.forFeature([
+      { name: 'instituteSettings', schema: InstituteSettingsSchema },
+    ])
   ],
   controllers: [BooksController],
   providers: [
@@ -23,6 +28,7 @@ import { RequestService } from 'src/request.service';
     BooksRepository,
     BookInstitutesService,
     BookInstitutesRepository,
+    InstituteSettingRepository,
     RequestService
   ],
 })
