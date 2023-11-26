@@ -7,7 +7,11 @@ export declare class ReservationsController {
     reIssueBook(id: string): Promise<string | import("./schema").Reservation>;
     returnBook(body: CreateReservationDto, id: string): Promise<string | import("./schema").Reservation>;
     overdue(id: string): Promise<number>;
-    findByBook(bookid: string): Promise<import("./schema").Reservation[]>;
+    findByBook(bookid: string): Promise<{
+        quantity: number;
+        availability: number;
+        reservations: import("./schema").Reservation[];
+    }>;
     findByPatron(patronid: string): Promise<import("./schema").Reservation[]>;
     findBookHistory(bookid: string): Promise<import("./schema").Reservation[]>;
     findPatronHistory(patronid: string): Promise<import("./schema").Reservation[]>;

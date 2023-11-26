@@ -141,7 +141,11 @@ let ReservationsService = class ReservationsService {
         console.log(checkAvailability);
         const status = 'issued';
         const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid, status);
-        return allReservations;
+        return {
+            quantity: getQuantity.quantity,
+            availability: checkAvailability,
+            reservations: allReservations,
+        };
     }
     async findAllByPatron(patronid) {
         console.log(this.instituteId);

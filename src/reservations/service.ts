@@ -152,7 +152,7 @@ export class ReservationsService {
     return allReservations;
   }
 
-  async findAllByBook(bookid: string): Promise<Reservation[]> {
+  async findAllByBook(bookid: string) {
     console.log(this.instituteId)
     const getQuantity = await this.bookInstitutesRepository.findOne({
       bookId: bookid,
@@ -170,7 +170,11 @@ export class ReservationsService {
 console.log(checkAvailability)
     const status = 'issued'
     const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid, status);
-    return allReservations;
+     return {
+      quantity: getQuantity.quantity,
+      availability: checkAvailability,
+      reservations: allReservations,
+    };
   }
 
   async findAllByPatron(patronid: string): Promise<Reservation[]> {

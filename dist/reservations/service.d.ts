@@ -16,7 +16,11 @@ export declare class ReservationsService {
     returnBook(body: CreateReservationDto, id: string): Promise<Reservation | string>;
     overdue(id: string): Promise<number>;
     findAll(): Promise<Reservation[]>;
-    findAllByBook(bookid: string): Promise<Reservation[]>;
+    findAllByBook(bookid: string): Promise<{
+        quantity: number;
+        availability: number;
+        reservations: Reservation[];
+    }>;
     findAllByPatron(patronid: string): Promise<Reservation[]>;
     findHistoryByBook(bookid: string): Promise<Reservation[]>;
     findHistoryByPatron(patronid: string): Promise<Reservation[]>;
