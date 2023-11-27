@@ -9,6 +9,11 @@ export declare class BooksController {
     createBook(isbn: string, body: BookDto): Promise<Book>;
     getInstituteBooks(): Promise<BookInstitute[]>;
     getAllBooks(): Promise<Book[]>;
+    getTotalBookQuantity(): Promise<{
+        totalBooks: number;
+        issuedBooks: number;
+        availableBooks: number;
+    }>;
     getBookById(id: string): Promise<Book | null>;
     updateBook(id: string, updateCatalogDto: UpdateCatalogDto): Promise<Book | null>;
 }

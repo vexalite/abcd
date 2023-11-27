@@ -35,11 +35,17 @@ export class BooksController {
     return this.booksService.findAllBooks();
   }
 
+  @Get('totalbooks')
+  async getTotalBookQuantity() {
+    const totalQuantity = await this.booksService.calculateTotalQuantity();
+    return totalQuantity ;
+  }
+
   @Get(':id')
   async getBookById(@Param('id') id: string): Promise<Book | null> {
     return this.booksService.findOne(id);
   }
-
+ 
   @Put(':id')
   async updateBook(
     @Param('id') id: string,
@@ -47,6 +53,8 @@ export class BooksController {
   ): Promise<Book | null> {
     return this.booksService.update(id, updateCatalogDto);
   }
+
+  
 
 
   // @Delete(':id')

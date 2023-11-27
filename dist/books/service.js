@@ -15,10 +15,12 @@ const repository_1 = require("./repository");
 const repository_2 = require("../book-institute-relation/repository");
 const request_service_1 = require("../request.service");
 const repository_3 = require("../instituteSettings/repository");
+const repository_4 = require("../reservations/repository");
 let BooksService = class BooksService {
-    constructor(requestService, booksRepository, instituteSettingRepository, bookInstitutesRepository) {
+    constructor(requestService, booksRepository, reservationRepository, instituteSettingRepository, bookInstitutesRepository) {
         this.requestService = requestService;
         this.booksRepository = booksRepository;
+        this.reservationRepository = reservationRepository;
         this.instituteSettingRepository = instituteSettingRepository;
         this.bookInstitutesRepository = bookInstitutesRepository;
         this.instituteId = this.requestService.getInstituteID();
@@ -99,12 +101,25 @@ let BooksService = class BooksService {
             throw error;
         }
     }
+    async calculateTotalQuantity() {
+        console.log(this.instituteId);
+        const totalBooks = await this.booksRepository.findAllB(this.instituteId);
+        const getIssued = await this.reservationRepository.findMultiple({
+            instituteId: this.instituteId,
+        });
+        return {
+            totalBooks: totalBooks,
+            issuedBooks: getIssued.length,
+            availableBooks: (totalBooks - getIssued.length)
+        };
+    }
 };
 exports.BooksService = BooksService;
 exports.BooksService = BooksService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [request_service_1.RequestService,
         repository_1.BooksRepository,
+        repository_4.ReservationRepository,
         repository_3.InstituteSettingRepository,
         repository_2.BookInstitutesRepository])
 ], BooksService);

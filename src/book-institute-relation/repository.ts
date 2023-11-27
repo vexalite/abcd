@@ -13,4 +13,5 @@ export class BookInstitutesRepository extends BaseRepository<BookInstitute> {
   ) {
     super(bookInstituteModel);
   }
+
 }

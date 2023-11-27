@@ -8,6 +8,7 @@ import { CreateBookInstituteRelationDto } from 'src/book-institute-relation/dto/
 import { RequestService } from 'src/request.service';
 import { BookInstitute } from 'src/book-institute-relation/schema';
 import { InstituteSettingRepository } from 'src/instituteSettings/repository';
+import { ReservationRepository } from 'src/reservations/repository';
 
 @Injectable()
 export class BooksService {
@@ -15,6 +16,7 @@ export class BooksService {
   constructor(
     private readonly requestService: RequestService,
     private readonly booksRepository: BooksRepository,
+    private readonly reservationRepository: ReservationRepository,
     private readonly instituteSettingRepository: InstituteSettingRepository,
     private readonly bookInstitutesRepository: BookInstitutesRepository,
   ) {this.instituteId = this.requestService.getInstituteID()}
@@ -104,6 +106,18 @@ export class BooksService {
     }
   }
 
+  async calculateTotalQuantity() {
+    console.log(this.instituteId)
+    const totalBooks = await this.booksRepository.findAllB(this.instituteId);
+    const getIssued = await this.reservationRepository.findMultiple({
+      instituteId: this.instituteId,
+    });
+    return {
+      totalBooks: totalBooks,
+      issuedBooks: getIssued.length,
+      availableBooks: (totalBooks-getIssued.length)
+    }
+  }
   // async remove(id: string): Promise<void> {
   //   try {
   //     await this.booksRepository.removeBook(id);

@@ -20,11 +20,13 @@ const auth_1 = require("../middleware/auth");
 const request_service_1 = require("../request.service");
 const repository_3 = require("../instituteSettings/repository");
 const schema_3 = require("../instituteSettings/schema");
+const repository_4 = require("../reservations/repository");
+const schema_4 = require("../reservations/schema");
 let BooksModule = class BooksModule {
     configure(consumer) {
         consumer
             .apply(auth_1.AuthenticationMiddleware)
-            .forRoutes({ path: "books/:isbn", method: common_1.RequestMethod.POST }, { path: "books", method: common_1.RequestMethod.GET });
+            .forRoutes({ path: "books/:isbn", method: common_1.RequestMethod.POST }, { path: "books", method: common_1.RequestMethod.GET }, { path: "books/totalbooks", method: common_1.RequestMethod.GET });
     }
 };
 exports.BooksModule = BooksModule;
@@ -32,6 +34,9 @@ exports.BooksModule = BooksModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: 'Book', schema: schema_1.BookSchema }]),
+            mongoose_1.MongooseModule.forFeature([
+                { name: 'Reservation', schema: schema_4.ReservationsSchema },
+            ]),
             mongoose_1.MongooseModule.forFeature([
                 { name: 'BookInstitute', schema: schema_2.BookInstituteSchema },
             ]),
@@ -46,7 +51,8 @@ exports.BooksModule = BooksModule = __decorate([
             service_2.BookInstitutesService,
             repository_2.BookInstitutesRepository,
             repository_3.InstituteSettingRepository,
-            request_service_1.RequestService
+            request_service_1.RequestService,
+            repository_4.ReservationRepository
         ],
     })
 ], BooksModule);

@@ -23,6 +23,25 @@ let BooksRepository = class BooksRepository extends baseRepository_1.BaseReposit
         this.bookModel = bookModel;
         this.bookInstituteModel = bookInstituteModel;
     }
+    async findAllB(instituteId) {
+        const aggregationResult = await this.bookInstituteModel.aggregate([
+            {
+                $match: {
+                    instituteId: instituteId,
+                },
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalQuantity: { $sum: '$quantity' },
+                },
+            },
+        ]);
+        if (aggregationResult.length > 0) {
+            return aggregationResult[0].totalQuantity;
+        }
+        return 0;
+    }
 };
 exports.BooksRepository = BooksRepository;
 exports.BooksRepository = BooksRepository = __decorate([

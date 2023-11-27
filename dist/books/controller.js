@@ -30,6 +30,10 @@ let BooksController = class BooksController {
     async getAllBooks() {
         return this.booksService.findAllBooks();
     }
+    async getTotalBookQuantity() {
+        const totalQuantity = await this.booksService.calculateTotalQuantity();
+        return totalQuantity;
+    }
     async getBookById(id) {
         return this.booksService.findOne(id);
     }
@@ -58,6 +62,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], BooksController.prototype, "getAllBooks", null);
+__decorate([
+    (0, common_1.Get)('totalbooks'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], BooksController.prototype, "getTotalBookQuantity", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),

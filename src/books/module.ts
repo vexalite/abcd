@@ -11,10 +11,15 @@ import { AuthenticationMiddleware } from 'src/middleware/auth';
 import { RequestService } from 'src/request.service';
 import { InstituteSettingRepository } from 'src/instituteSettings/repository';
 import { InstituteSettingsSchema } from 'src/instituteSettings/schema';
+import { ReservationRepository } from 'src/reservations/repository';
+import { ReservationsSchema } from 'src/reservations/schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: 'Book', schema: BookSchema }]),
+    MongooseModule.forFeature([
+      { name: 'Reservation', schema: ReservationsSchema },
+    ]),
     MongooseModule.forFeature([
       { name: 'BookInstitute', schema: BookInstituteSchema },
     ]),
@@ -29,7 +34,8 @@ import { InstituteSettingsSchema } from 'src/instituteSettings/schema';
     BookInstitutesService,
     BookInstitutesRepository,
     InstituteSettingRepository,
-    RequestService
+    RequestService,
+    ReservationRepository
   ],
 })
 export class BooksModule 
@@ -40,7 +46,8 @@ implements NestModule
     .apply(AuthenticationMiddleware)
     .forRoutes(
     { path: "books/:isbn", method: RequestMethod.POST},
-    { path: "books", method: RequestMethod.GET})
+    { path: "books", method: RequestMethod.GET},
+    { path: "books/totalbooks", method: RequestMethod.GET})
 
     // .forRoutes('*')
   }

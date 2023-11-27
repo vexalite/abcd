@@ -6,4 +6,5 @@ export declare class BooksRepository extends BaseRepository<Book> {
     private readonly bookModel;
     private readonly bookInstituteModel;
     constructor(bookModel: Model<Book>, bookInstituteModel: Model<BookInstitute>);
+    findAllB(instituteId: any): Promise<number>;
 }
