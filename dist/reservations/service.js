@@ -111,8 +111,17 @@ let ReservationsService = class ReservationsService {
         if (getInstituteSettings.payLater === true) {
             const getReservation = await this.reservationRepository.findById(id);
             getReservation.returnedDate = new Date();
+            const dueDate = getReservation.dueDate;
+            let charges;
+            if (getReservation.patronType === 'student') {
+                charges = getInstituteSettings.student.overdueCharges;
+            }
+            else {
+                charges = getInstituteSettings.employee.overdueCharges;
+            }
+            const overdueCharges = this.calculateOverdueCharges(dueDate, charges);
             getReservation.status = 'returned';
-            getReservation.overdueChargesPaid = body.pendingCharges;
+            getReservation.pendingCharges = overdueCharges;
             await this.reservationRepository.create(getReservation);
             return getReservation;
         }
@@ -120,7 +129,16 @@ let ReservationsService = class ReservationsService {
             const getReservation = await this.reservationRepository.findById(id);
             getReservation.returnedDate = new Date();
             getReservation.status = 'returned';
-            getReservation.overdueChargesPaid = body.overdueChargesPaid;
+            const dueDate = getReservation.dueDate;
+            let charges;
+            if (getReservation.patronType === 'student') {
+                charges = getInstituteSettings.student.overdueCharges;
+            }
+            else {
+                charges = getInstituteSettings.employee.overdueCharges;
+            }
+            const overdueCharges = this.calculateOverdueCharges(dueDate, charges);
+            getReservation.overdueChargesPaid = overdueCharges;
             await this.reservationRepository.create(getReservation);
             return getReservation;
         }
