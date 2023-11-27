@@ -105,10 +105,13 @@ let ReservationsService = class ReservationsService {
         }
     }
     async returnBook(body, id) {
+        const getReservation = await this.reservationRepository.findById(id);
+        console.log(getReservation);
         const getInstituteSettings = await this.instituteSettingRepository.findOne({
-            instituteId: this.instituteId,
+            instituteId: getReservation.instituteId,
         });
-        if (getInstituteSettings.payLater === true) {
+        console.log(getInstituteSettings.payLater);
+        if (getInstituteSettings.payLater) {
             const getReservation = await this.reservationRepository.findById(id);
             getReservation.returnedDate = new Date();
             const dueDate = getReservation.dueDate;

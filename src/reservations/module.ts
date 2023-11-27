@@ -46,7 +46,9 @@ implements NestModule
     { path: "reservations/patron/:patronid", method: RequestMethod.GET},
     { path: "reservations/h/book/:bookid", method: RequestMethod.GET},
     { path: "reservations/h/patron/:patronid", method: RequestMethod.GET},
-    { path: "reservations", method: RequestMethod.POST})
+    { path: "reservations", method: RequestMethod.POST},
+    { path: "reservations/return/:id", method: RequestMethod.PATCH}
+    )
 
     // .forRoutes('*')
   }

@@ -8,7 +8,7 @@ export declare class InstituteService {
     private instituteId;
     constructor(requestService: RequestService, instituteSettingRepository: InstituteSettingRepository);
     create(createInstituteDto: any): Promise<InstituteSetting>;
-    findInstituteSetting(): Promise<InstituteSetting[]>;
+    findInstituteSetting(): Promise<InstituteSetting[] | InstituteSetting>;
     findOne(id: string): Promise<InstituteSetting>;
     update(id: string, updateInstituteDto: UpdateInstituteDto): Promise<InstituteSetting>;
     remove(id: string): Promise<InstituteSetting>;

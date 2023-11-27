@@ -21,7 +21,7 @@ export class InstituteService {
     return createdInstitute;
   }
 
-  async findInstituteSetting(): Promise<InstituteSetting[]> {
+  async findInstituteSetting(): Promise<InstituteSetting[] | InstituteSetting> {
     const allInstitutes = await this.instituteSettingRepository.findAllByInstitute(this.instituteId);
     return allInstitutes;
   }

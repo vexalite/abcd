@@ -25,7 +25,7 @@ export class BaseRepository<T extends Document> {
     return this.model.find().exec();
   }
 
-  async findAllByInstitute(id: string): Promise<T[]> {
+  async findAllByInstitute(id: string) {
     return this.model
       .find({
         instituteId: id,

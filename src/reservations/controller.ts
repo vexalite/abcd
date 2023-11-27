@@ -12,7 +12,7 @@ export class ReservationsController {
         return this.reservationsService.issue(body);
   }
 
-  @Patch('reissue:id')
+  @Patch('reissue/:id')
   reIssueBook(@Param('id') id: string) {
     return this.reservationsService.reIssueBook(id);
   }

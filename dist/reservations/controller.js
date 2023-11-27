@@ -63,7 +63,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ReservationsController.prototype, "issueBook", null);
 __decorate([
-    (0, common_1.Patch)('reissue:id'),
+    (0, common_1.Patch)('reissue/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

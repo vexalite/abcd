@@ -128,11 +128,13 @@ export class ReservationsService {
     body: ReturnBookDto,
     id: string,
   ): Promise<Reservation | string> {
+    const getReservation = await this.reservationRepository.findById(id);
+    console.log(getReservation)
     const getInstituteSettings = await this.instituteSettingRepository.findOne({
-      instituteId: this.instituteId,
-    });
-
-    if(getInstituteSettings.payLater === true){
+      instituteId: getReservation.instituteId,
+    })
+console.log(getInstituteSettings.payLater)
+    if(getInstituteSettings.payLater){
       const getReservation = await this.reservationRepository.findById(id);
     getReservation.returnedDate = new Date();
     const dueDate = getReservation.dueDate
