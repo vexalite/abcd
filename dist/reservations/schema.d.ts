@@ -27,7 +27,7 @@ import { Book } from 'src/books/schema';
 export interface Reservation extends Document {
     patronType: 'student' | 'employee';
     patronId: string;
-    bookId: Types.ObjectId | string;
+    bookId: Types.ObjectId | string | Book;
     instituteId: string;
     status: 'issued' | 'returned';
     issuedBy: string;
@@ -44,7 +44,7 @@ export type ReservationDocument = Reservation & Document;
 export declare class Reservations {
     patronType: string;
     patronId: string;
-    bookId: Book;
+    bookId: Types.ObjectId | string | Book;
     instituteId: string;
     status: string;
     issuedBy: string;

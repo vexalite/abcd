@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Types } from 'mongoose';
-import { Book } from 'src/books/schema';
+import { Book, BookSchema } from 'src/books/schema';
 
 export interface Reservation extends Document {
   patronType: 'student' | 'employee';
   patronId: string;
-  bookId: Types.ObjectId | string;
+  bookId: Types.ObjectId | string | Book;
   instituteId: string;
   status: 'issued' | 'returned';
   issuedBy: string;
@@ -30,7 +30,7 @@ export class Reservations {
   patronId!: string;
 
   @Prop({ type: Types.ObjectId, ref: 'Book', required: true })
-  bookId!: Book;
+  bookId!: Types.ObjectId | string | Book;
 
   @Prop({ required: true })
   instituteId!: string;

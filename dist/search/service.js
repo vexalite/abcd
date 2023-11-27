@@ -22,7 +22,6 @@ let SearchService = class SearchService {
         this.instituteId = this.requestService.getInstituteID();
     }
     async universalSearch(searchQuery) {
-        console.log(this.instituteId);
         const searchResults = await this.searchRepository.universalSearch(this.instituteId, searchQuery);
         return searchResults;
     }

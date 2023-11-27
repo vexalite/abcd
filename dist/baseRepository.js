@@ -69,6 +69,12 @@ class BaseRepository {
     async findOne(filter) {
         return this.model.findOne(filter).exec();
     }
+    async findOneReservation(filter) {
+        return this.model
+            .findById(filter)
+            .populate('bookId')
+            .exec();
+    }
     async findMultiple(filter) {
         return this.model.find(filter).exec();
     }

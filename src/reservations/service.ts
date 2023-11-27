@@ -253,7 +253,7 @@ export class ReservationsService {
   async findOne(id: string)
   // : Promise<Reservation> 
   {
-    const reservation = await this.reservationRepository.findById(id);
+    const reservation = await this.reservationRepository.findOneReservation(id);
     const { dueDate } = reservation;
     // console.log(reservation)
     const getInstituteSettings = await this.instituteSettingRepository.findOne({
