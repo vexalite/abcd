@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Logger } from '@nestjs/common';
 import { ReservationsService } from './service';
-import { CreateReservationDto } from './dto/create-reservation.dto';
+import { CreateReservationDto, ReturnBookDto } from './dto/create-reservation.dto';
 import { FreezePipe } from 'src/pipes/freezePipe';
 import { RequestService } from 'src/request.service';
 
@@ -18,7 +18,7 @@ export class ReservationsController {
   }
 
   @Patch('return/:id')
-  returnBook(@Body() body: CreateReservationDto, @Param('id') id: string) {
+  returnBook(@Body() body: ReturnBookDto, @Param('id') id: string) {
     return this.reservationsService.returnBook(body, id);
   }
   @Get('overdue/:id')
@@ -53,5 +53,10 @@ export class ReservationsController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.reservationsService.findOne(id);
+  }
+
+  @Get('status/:bookid')
+  status(@Param('bookid') bookid: string){
+    return this.reservationsService.status(bookid)
   }
 }

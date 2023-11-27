@@ -1,6 +1,7 @@
 import mongoose, { Document } from 'mongoose';
 export interface InstituteSetting extends Document {
     instituteId: string;
+    payLater: boolean;
     student: {
         borrowingPeriod: number;
         overdueCharges: number;
@@ -26,6 +27,7 @@ export declare class InstituteSettings extends Document {
         overdueCharges: number;
         borrowingCapacity: number;
     };
+    payLater: boolean;
     createdAt: Date;
     updatedAt?: Date;
 }

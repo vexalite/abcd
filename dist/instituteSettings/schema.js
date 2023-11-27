@@ -38,6 +38,10 @@ __decorate([
     __metadata("design:type", Object)
 ], InstituteSettings.prototype, "employee", void 0);
 __decorate([
+    (0, mongoose_1.Prop)({ type: String, required: true, default: false }),
+    __metadata("design:type", Boolean)
+], InstituteSettings.prototype, "payLater", void 0);
+__decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", Date)
 ], InstituteSettings.prototype, "createdAt", void 0);

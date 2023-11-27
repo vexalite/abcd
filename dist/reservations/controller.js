@@ -50,6 +50,9 @@ let ReservationsController = class ReservationsController {
     findOne(id) {
         return this.reservationsService.findOne(id);
     }
+    status(bookid) {
+        return this.reservationsService.status(bookid);
+    }
 };
 exports.ReservationsController = ReservationsController;
 __decorate([
@@ -71,7 +74,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_reservation_dto_1.CreateReservationDto, String]),
+    __metadata("design:paramtypes", [create_reservation_dto_1.ReturnBookDto, String]),
     __metadata("design:returntype", void 0)
 ], ReservationsController.prototype, "returnBook", null);
 __decorate([
@@ -122,6 +125,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ReservationsController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Get)('status/:bookid'),
+    __param(0, (0, common_1.Param)('bookid')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], ReservationsController.prototype, "status", null);
 exports.ReservationsController = ReservationsController = __decorate([
     (0, common_1.Controller)('reservations'),
     __metadata("design:paramtypes", [service_1.ReservationsService])

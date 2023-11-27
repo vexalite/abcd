@@ -40,6 +40,8 @@ implements NestModule
     .apply(AuthenticationMiddleware)
     .forRoutes(
     { path: "reservations/all", method: RequestMethod.GET},
+    { path: "reservations/:id", method: RequestMethod.GET},
+    { path: "reservations/status/:bookid", method: RequestMethod.GET},
     { path: "reservations/book/:bookid", method: RequestMethod.GET},
     { path: "reservations/patron/:patronid", method: RequestMethod.GET},
     { path: "reservations/h/book/:bookid", method: RequestMethod.GET},

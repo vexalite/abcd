@@ -58,7 +58,15 @@ __decorate([
 __decorate([
     (0, mongoose_1.Prop)({ type: Number }),
     __metadata("design:type", Number)
+], Reservations.prototype, "pendingCharges", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Number }),
+    __metadata("design:type", Number)
 ], Reservations.prototype, "overdueChargesPaid", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Number }),
+    __metadata("design:type", Number)
+], Reservations.prototype, "overdueCharges", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: Date, required: false }),
     __metadata("design:type", Date)

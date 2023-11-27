@@ -35,8 +35,10 @@ export interface Reservation extends Document {
     renewDate?: Date;
     dueDate: Date;
     overdueChargesPaid?: number;
+    overdueCharges?: number;
     returnedDate?: Date;
     createdAt: Date;
+    pendingCharges?: number;
 }
 export type ReservationDocument = Reservation & Document;
 export declare class Reservations {
@@ -49,7 +51,9 @@ export declare class Reservations {
     issuedDate: Date;
     renewDate?: Date;
     dueDate: Date;
+    pendingCharges?: number;
     overdueChargesPaid?: number;
+    overdueCharges?: number;
     returnedDate?: Date;
     createdAt: Date;
 }

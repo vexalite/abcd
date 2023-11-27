@@ -13,8 +13,10 @@ export interface Reservation extends Document {
   renewDate?: Date;
   dueDate: Date;
   overdueChargesPaid?: number;
+  overdueCharges?: number;
   returnedDate?: Date;
   createdAt: Date;
+  pendingCharges?: number
 }
 
 export type ReservationDocument = Reservation & Document;
@@ -52,8 +54,14 @@ export class Reservations {
   })
   dueDate!: Date;
 
+  @Prop({ type: Number})
+  pendingCharges?: number
+
   @Prop({ type: Number })
   overdueChargesPaid?: number;
+
+  @Prop({ type: Number })
+  overdueCharges?: number;
 
   @Prop({ type: Date, required: false })
   returnedDate?: Date;

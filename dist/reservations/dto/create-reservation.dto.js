@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateReservationDto = void 0;
+exports.ReturnBookDto = exports.CreateReservationDto = void 0;
 const class_validator_1 = require("class-validator");
 class CreateReservationDto {
 }
@@ -49,6 +49,11 @@ __decorate([
     __metadata("design:type", Number)
 ], CreateReservationDto.prototype, "overdueChargesPaid", void 0);
 __decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], CreateReservationDto.prototype, "pendingCharges", void 0);
+__decorate([
     (0, class_validator_1.IsOptional)(),
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", Date)
@@ -57,4 +62,54 @@ __decorate([
     (0, class_validator_1.IsDateString)(),
     __metadata("design:type", Date)
 ], CreateReservationDto.prototype, "createdAt", void 0);
+class ReturnBookDto {
+}
+exports.ReturnBookDto = ReturnBookDto;
+__decorate([
+    (0, class_validator_1.IsEnum)(['student', 'employee']),
+    __metadata("design:type", String)
+], ReturnBookDto.prototype, "patronType", void 0);
+__decorate([
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ReturnBookDto.prototype, "patronId", void 0);
+__decorate([
+    (0, class_validator_1.IsMongoId)(),
+    __metadata("design:type", Object)
+], ReturnBookDto.prototype, "bookId", void 0);
+__decorate([
+    (0, class_validator_1.IsEnum)(['issued', 'returned']),
+    __metadata("design:type", String)
+], ReturnBookDto.prototype, "status", void 0);
+__decorate([
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", Date)
+], ReturnBookDto.prototype, "issuedDate", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", Date)
+], ReturnBookDto.prototype, "renewDate", void 0);
+__decorate([
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", Date)
+], ReturnBookDto.prototype, "dueDate", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    __metadata("design:type", Number)
+], ReturnBookDto.prototype, "overdueChargesPaid", void 0);
+__decorate([
+    (0, class_validator_1.IsNumber)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Number)
+], ReturnBookDto.prototype, "pendingCharges", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", Date)
+], ReturnBookDto.prototype, "returnedDate", void 0);
+__decorate([
+    (0, class_validator_1.IsDateString)(),
+    __metadata("design:type", Date)
+], ReturnBookDto.prototype, "createdAt", void 0);
 //# sourceMappingURL=create-reservation.dto.js.map
