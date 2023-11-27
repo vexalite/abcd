@@ -111,7 +111,9 @@ export class BooksService {
     const totalBooks = await this.booksRepository.findAllB(this.instituteId);
     const getIssued = await this.reservationRepository.findMultiple({
       instituteId: this.instituteId,
+      status: 'issued'
     });
+    console.log(getIssued)
     return {
       totalBooks: totalBooks,
       issuedBooks: getIssued.length,

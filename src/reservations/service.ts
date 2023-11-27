@@ -42,6 +42,7 @@ export class ReservationsService {
     const getIssued = await this.reservationRepository.findMultiple({
       bookId,
       instituteId,
+      status: 'issued'
     });
     console.log(getIssued.length);
 
@@ -213,6 +214,7 @@ console.log(getInstituteSettings.payLater)
     const getIssued = await this.reservationRepository.findMultiple({
       bookId: bookid,
       instituteId: this.instituteId,
+      status: 'issued'
     });
     // console.log(getIssued.length);
 

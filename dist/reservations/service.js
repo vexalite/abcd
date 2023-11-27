@@ -41,6 +41,7 @@ let ReservationsService = class ReservationsService {
         const getIssued = await this.reservationRepository.findMultiple({
             bookId,
             instituteId,
+            status: 'issued'
         });
         console.log(getIssued.length);
         const getAvailability = getQuantity.quantity - getIssued.length;
@@ -181,6 +182,7 @@ let ReservationsService = class ReservationsService {
         const getIssued = await this.reservationRepository.findMultiple({
             bookId: bookid,
             instituteId: this.instituteId,
+            status: 'issued'
         });
         const checkAvailability = getQuantity.quantity - getIssued.length;
         const status = 'issued';
