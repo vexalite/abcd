@@ -35,7 +35,7 @@ export class BooksService {
       }
       const existingBook = await this.booksRepository.findBookByISBN(isbn);
       if (existingBook) {
-        console.log(existingBook.id);
+        // console.log(existingBook.id);
         const relation: CreateBookInstituteRelationDto = {
           instituteId: this.instituteId,
           bookId: existingBook.id,
@@ -107,13 +107,13 @@ export class BooksService {
   }
 
   async calculateTotalQuantity() {
-    console.log(this.instituteId)
+    // console.log(this.instituteId)
     const totalBooks = await this.booksRepository.findAllB(this.instituteId);
     const getIssued = await this.reservationRepository.findMultiple({
       instituteId: this.instituteId,
       status: 'issued'
     });
-    console.log(getIssued)
+    // console.log(getIssued)
     return {
       totalBooks: totalBooks,
       issuedBooks: getIssued.length,
