@@ -38,7 +38,6 @@ export declare class BaseRepository<T extends Document> {
     delete(id: string): Promise<T>;
     remove(id: string): Promise<T>;
     findOne(filter: FilterQuery<T>): Promise<T>;
-    findOneReservation(filter: any): Promise<import("mongoose").UnpackedIntersection<import("mongoose").IfAny<T, any, Document<unknown, {}, T> & import("mongoose").Require_id<T>>, {}>>;
     findMultiple(filter: FilterQuery<T>): Promise<T[]>;
     findBookByISBN(isbn: string): Promise<T>;
 }

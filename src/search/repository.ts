@@ -17,7 +17,10 @@ export class SearchRepository extends BaseRepository<BookInstitute> {
   async universalSearch(id: string, searchQuery: string) {
     const book = await this.bookModel
       .find({
-        title: { $regex: new RegExp(searchQuery, 'i') },
+        $or: [
+          { title: { $regex: new RegExp(searchQuery, 'i') } },
+          { author: { $regex: new RegExp(searchQuery, 'i') } },
+        ],
       })
       // .find({
       //   $text: { $search: searchQuery },

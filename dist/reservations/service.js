@@ -199,7 +199,7 @@ let ReservationsService = class ReservationsService {
         return allReservations;
     }
     async findOne(id) {
-        const reservation = await this.reservationRepository.findOneReservation(id);
+        const reservation = await this.reservationRepository.findByIdAndPopulate(id);
         const { dueDate } = reservation;
         const getInstituteSettings = await this.instituteSettingRepository.findOne({
             instituteId: this.instituteId,

@@ -26,7 +26,10 @@ let SearchRepository = class SearchRepository extends baseRepository_1.BaseRepos
     async universalSearch(id, searchQuery) {
         const book = await this.bookModel
             .find({
-            title: { $regex: new RegExp(searchQuery, 'i') },
+            $or: [
+                { title: { $regex: new RegExp(searchQuery, 'i') } },
+                { author: { $regex: new RegExp(searchQuery, 'i') } },
+            ],
         })
             .exec();
         const booksToCheck = book.map((book) => book.id);
