@@ -17,6 +17,6 @@ export class CustomLogger extends ConsoleLogger implements LoggerService {
     ];
 
     // Check if the log message contains any of the specified messages
-    return messagesToDisable.some(pattern => message.includes(pattern));
+    return messagesToDisable.some((pattern) => message.includes(pattern));
   }
 }

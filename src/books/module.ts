@@ -47,6 +47,7 @@ implements NestModule
     .forRoutes(
     { path: "books/:isbn", method: RequestMethod.POST},
     { path: "books", method: RequestMethod.GET},
+    { path: "books/:id", method: RequestMethod.GET},
     { path: "books/totalbooks", method: RequestMethod.GET})
 
     // .forRoutes('*')

@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { ReservationsService } from './service';
 import { ReservationsController } from './controller';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -29,26 +34,24 @@ import { AuthenticationMiddleware } from 'src/middleware/auth';
     ReservationRepository,
     BookInstitutesRepository,
     InstituteSettingRepository,
-    RequestService
+    RequestService,
   ],
 })
-export class ReservationsModule
-implements NestModule
-{
-  configure(consumer: MiddlewareConsumer){
+export class ReservationsModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
     consumer
-    .apply(AuthenticationMiddleware)
-    .forRoutes(
-    { path: "reservations/all", method: RequestMethod.GET},
-    { path: "reservations/:id", method: RequestMethod.GET},
-    { path: "reservations/status/:bookid", method: RequestMethod.GET},
-    { path: "reservations/book/:bookid", method: RequestMethod.GET},
-    { path: "reservations/patron/:patronid", method: RequestMethod.GET},
-    { path: "reservations/h/book/:bookid", method: RequestMethod.GET},
-    { path: "reservations/h/patron/:patronid", method: RequestMethod.GET},
-    { path: "reservations", method: RequestMethod.POST},
-    { path: "reservations/return/:id", method: RequestMethod.PATCH}
-    )
+      .apply(AuthenticationMiddleware)
+      .forRoutes(
+        { path: 'reservations/all', method: RequestMethod.GET },
+        { path: 'reservations/:id', method: RequestMethod.GET },
+        { path: 'reservations/status/:bookid', method: RequestMethod.GET },
+        { path: 'reservations/book/:bookid', method: RequestMethod.GET },
+        { path: 'reservations/patron/:patronid', method: RequestMethod.GET },
+        { path: 'reservations/h/book/:bookid', method: RequestMethod.GET },
+        { path: 'reservations/h/patron/:patronid', method: RequestMethod.GET },
+        { path: 'reservations', method: RequestMethod.POST },
+        { path: 'reservations/return/:id', method: RequestMethod.PATCH },
+      );
 
     // .forRoutes('*')
   }

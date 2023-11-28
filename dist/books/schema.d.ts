@@ -28,6 +28,7 @@ export interface Book extends Document {
     averageRating?: number;
     createdAt: Date;
     updatedAt?: Date | undefined;
+    availability: number;
 }
 export declare class Books extends Document {
     title: string;
@@ -40,6 +41,7 @@ export declare class Books extends Document {
         ISBN13?: string;
     };
     pageCount: number;
+    availability?: number;
     dimensions?: {
         height?: number;
         width?: number;

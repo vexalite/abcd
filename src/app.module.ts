@@ -1,4 +1,10 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod, Scope } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+  Scope,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BooksModule } from './books/module';
@@ -30,30 +36,33 @@ import { exceptionFilter } from './filters/http-exception';
     SearchModule,
   ],
   controllers: [AppController],
-  providers: [AppService, RequestService, {
-    provide: APP_GUARD,
-    useClass: Authguard
-  },{
-    provide: APP_INTERCEPTOR,
-    scope: Scope.REQUEST,
-    useClass: LoggingInterceptor
-  },{
-    provide: APP_FILTER,
-    useClass: exceptionFilter
-  }
-  // {
-  //   provide: APP_PIPE,
-  //   useClass: FreezePipe
-  // }
-],
+  providers: [
+    AppService,
+    RequestService,
+    {
+      provide: APP_GUARD,
+      useClass: Authguard,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      scope: Scope.REQUEST,
+      useClass: LoggingInterceptor,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: exceptionFilter,
+    },
+    // {
+    //   provide: APP_PIPE,
+    //   useClass: FreezePipe
+    // }
+  ],
 })
-export class AppModule  
-implements NestModule
-{
-  configure(consumer: MiddlewareConsumer){
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
     consumer
-    .apply(AuthenticationMiddleware)
-    .forRoutes({ path: "/", method: RequestMethod.GET})
+      .apply(AuthenticationMiddleware)
+      .forRoutes({ path: '/', method: RequestMethod.GET });
     // .forRoutes('*')
   }
 }

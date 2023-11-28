@@ -12,7 +12,9 @@ export class SearchService {
     private readonly requestService: RequestService,
     private readonly booksRepository: BooksRepository,
     private readonly searchRepository: SearchRepository,
-  ) {this.instituteId = this.requestService.getInstituteID()}
+  ) {
+    this.instituteId = this.requestService.getInstituteID();
+  }
 
   async universalSearch(searchQuery: string) {
     // console.log(this.instituteId)

@@ -23,18 +23,18 @@ class BaseRepository {
         return this.model.find().exec();
     }
     async findAllByInstitute(id) {
-        return this.model
+        return (this.model
             .find({
             instituteId: id,
         })
-            .exec();
+            .exec());
     }
     async findReservationByBook(id, bookid, status) {
         return this.model
             .find({
             instituteId: id,
             bookId: bookid,
-            status: status
+            status: status,
         })
             .populate('bookId')
             .exec();
@@ -44,7 +44,7 @@ class BaseRepository {
             .find({
             instituteId: id,
             patronId: patronid,
-            status: status
+            status: status,
         })
             .populate('bookId')
             .exec();

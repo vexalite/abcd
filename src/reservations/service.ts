@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateReservationDto, ReturnBookDto } from './dto/create-reservation.dto';
+import {
+  CreateReservationDto,
+  ReturnBookDto,
+} from './dto/create-reservation.dto';
 import { Reservation } from './schema';
 import { ReservationRepository } from './repository';
 import { BookInstitutesRepository } from 'src/book-institute-relation/repository';
@@ -14,7 +17,9 @@ export class ReservationsService {
     private readonly reservationRepository: ReservationRepository,
     private readonly bookInstitutesRepository: BookInstitutesRepository,
     private readonly instituteSettingRepository: InstituteSettingRepository,
-  ) {this.instituteId = this.requestService.getInstituteID()}
+  ) {
+    this.instituteId = this.requestService.getInstituteID();
+  }
 
   private calculateOverdueCharges(dueDate: Date, charges: number): number {
     const currentDate = new Date();
@@ -29,10 +34,10 @@ export class ReservationsService {
     // );
 
     const overdueCharges = overDueDays * charges;
-      return overdueCharges;
+    return overdueCharges;
   }
 
-  private async getAvailability(instituteId, bookId){
+  private async getAvailability(instituteId, bookId) {
     const getQuantity = await this.bookInstitutesRepository.findOne({
       bookId,
       instituteId,
@@ -42,59 +47,62 @@ export class ReservationsService {
     const getIssued = await this.reservationRepository.findMultiple({
       bookId,
       instituteId,
-      status: 'issued'
+      status: 'issued',
     });
     // console.log(getIssued.length);
 
     const getAvailability = getQuantity.quantity - getIssued.length;
     // console.log(`available -- ${getAvailability}`);
-    return getAvailability
+    return getAvailability;
   }
 
   async issue(body: CreateReservationDto): Promise<Reservation | string> {
-    try{
+    try {
       // console.log(this.instituteId)
-    const checkAvailability = await this.getAvailability(this.instituteId, body.bookId)
-    const getInstituteSettings = await this.instituteSettingRepository.findOne({
-      instituteId: this.instituteId,
-    });
-    // console.log(getBorrowingPeriod.student.borrowingPeriod);
-    if (checkAvailability > 0) {
-      if (body.patronType === 'student') {
-        // console.log(getIssued);
-        // if (getIssued.patronId === body.patronId) {
-        body.dueDate = new Date();
-        body.dueDate.setDate(
-          body.dueDate.getDate() + getInstituteSettings.student.borrowingPeriod,
-        );
-        const createdReservation =
-          await this.reservationRepository.create({
+      const checkAvailability = await this.getAvailability(
+        this.instituteId,
+        body.bookId,
+      );
+      const getInstituteSettings =
+        await this.instituteSettingRepository.findOne({
+          instituteId: this.instituteId,
+        });
+      // console.log(getBorrowingPeriod.student.borrowingPeriod);
+      if (checkAvailability > 0) {
+        if (body.patronType === 'student') {
+          // console.log(getIssued);
+          // if (getIssued.patronId === body.patronId) {
+          body.dueDate = new Date();
+          body.dueDate.setDate(
+            body.dueDate.getDate() +
+              getInstituteSettings.student.borrowingPeriod,
+          );
+          const createdReservation = await this.reservationRepository.create({
             ...body,
             instituteId: this.instituteId,
           });
-        return createdReservation;
-        // } else {
-        //   return `max capacity reached`;
-        // }
+          return createdReservation;
+          // } else {
+          //   return `max capacity reached`;
+          // }
+        } else {
+          body.dueDate = new Date();
+          body.dueDate.setDate(
+            body.dueDate.getDate() +
+              getInstituteSettings.employee.borrowingPeriod,
+          );
+          const createdReservation = await this.reservationRepository.create({
+            ...body,
+            instituteId: this.instituteId,
+          });
+          return createdReservation;
+        }
       } else {
-        body.dueDate = new Date();
-        body.dueDate.setDate(
-          body.dueDate.getDate() + getInstituteSettings.employee.borrowingPeriod,
-        );
-        const createdReservation =
-          await this.reservationRepository.create({
-            ...body,
-            instituteId: this.instituteId,
-          });
-        return createdReservation;
+        return `unfortunately!, this book is not available`;
       }
-    } else {
-      return `unfortunately!, this book is not available`;
+    } catch (err) {
+      console.log(err);
     }
- 
-  }catch(err){
-    console.log(err)
-  }
   }
 
   async reIssueBook(id: string): Promise<Reservation | string> {
@@ -133,40 +141,39 @@ export class ReservationsService {
     // console.log(getReservation)
     const getInstituteSettings = await this.instituteSettingRepository.findOne({
       instituteId: getReservation.instituteId,
-    })
-// console.log(getInstituteSettings.payLater)
-    if(getInstituteSettings.payLater){
+    });
+    // console.log(getInstituteSettings.payLater)
+    if (getInstituteSettings.payLater) {
       const getReservation = await this.reservationRepository.findById(id);
-    getReservation.returnedDate = new Date();
-    const dueDate = getReservation.dueDate
-    let charges
-    if (getReservation.patronType === 'student') {
-      charges = getInstituteSettings.student.overdueCharges;
-   } else {
-      charges = getInstituteSettings.employee.overdueCharges;
-   }
-    const overdueCharges = this.calculateOverdueCharges(dueDate, charges)
-    getReservation.status = 'returned';
-    getReservation.pendingCharges = overdueCharges;
-    await this.reservationRepository.create(getReservation);
-    return getReservation;
-    }else{
+      getReservation.returnedDate = new Date();
+      const dueDate = getReservation.dueDate;
+      let charges;
+      if (getReservation.patronType === 'student') {
+        charges = getInstituteSettings.student.overdueCharges;
+      } else {
+        charges = getInstituteSettings.employee.overdueCharges;
+      }
+      const overdueCharges = this.calculateOverdueCharges(dueDate, charges);
+      getReservation.status = 'returned';
+      getReservation.pendingCharges = overdueCharges;
+      await this.reservationRepository.create(getReservation);
+      return getReservation;
+    } else {
       const getReservation = await this.reservationRepository.findById(id);
-    getReservation.returnedDate = new Date();
-    getReservation.status = 'returned';
-    const dueDate = getReservation.dueDate
-    let charges
-    if (getReservation.patronType === 'student') {
-      charges = getInstituteSettings.student.overdueCharges;
-   } else {
-      charges = getInstituteSettings.employee.overdueCharges;
-   }
-    const overdueCharges = this.calculateOverdueCharges(dueDate, charges)
-    getReservation.overdueChargesPaid = overdueCharges;
-    await this.reservationRepository.create(getReservation);
-    return getReservation;
+      getReservation.returnedDate = new Date();
+      getReservation.status = 'returned';
+      const dueDate = getReservation.dueDate;
+      let charges;
+      if (getReservation.patronType === 'student') {
+        charges = getInstituteSettings.student.overdueCharges;
+      } else {
+        charges = getInstituteSettings.employee.overdueCharges;
+      }
+      const overdueCharges = this.calculateOverdueCharges(dueDate, charges);
+      getReservation.overdueChargesPaid = overdueCharges;
+      await this.reservationRepository.create(getReservation);
+      return getReservation;
     }
-    
   }
 
   async overdue(id: string): Promise<number> {
@@ -199,7 +206,9 @@ export class ReservationsService {
 
   async findAll(): Promise<Reservation[]> {
     // console.log(this.instituteId)
-    const allReservations = await this.reservationRepository.findAllByInstitute(this.instituteId);
+    const allReservations = await this.reservationRepository.findAllByInstitute(
+      this.instituteId,
+    );
     return allReservations;
   }
 
@@ -214,15 +223,20 @@ export class ReservationsService {
     const getIssued = await this.reservationRepository.findMultiple({
       bookId: bookid,
       instituteId: this.instituteId,
-      status: 'issued'
+      status: 'issued',
     });
     // console.log(getIssued.length);
 
-    const checkAvailability = getQuantity.quantity - getIssued.length
-// console.log(checkAvailability)
-    const status = 'issued'
-    const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid, status);
-     return {
+    const checkAvailability = getQuantity.quantity - getIssued.length;
+    // console.log(checkAvailability)
+    const status = 'issued';
+    const allReservations =
+      await this.reservationRepository.findReservationByBook(
+        this.instituteId,
+        bookid,
+        status,
+      );
+    return {
       quantity: getQuantity.quantity,
       availability: checkAvailability,
       reservations: allReservations,
@@ -231,52 +245,76 @@ export class ReservationsService {
 
   async findAllByPatron(patronid: string): Promise<Reservation[]> {
     // console.log(this.instituteId)
-    const status = 'issued'
-    const allReservations = await this.reservationRepository.findReservationByPatron(this.instituteId, patronid, status);
+    const status = 'issued';
+    const allReservations =
+      await this.reservationRepository.findReservationByPatron(
+        this.instituteId,
+        patronid,
+        status,
+      );
     return allReservations;
   }
 
   async findHistoryByBook(bookid: string): Promise<Reservation[]> {
     // console.log(this.instituteId)
-    const status = 'returned'
-    const allReservations = await this.reservationRepository.findReservationByBook(this.instituteId, bookid, status);
+    const status = 'returned';
+    const allReservations =
+      await this.reservationRepository.findReservationByBook(
+        this.instituteId,
+        bookid,
+        status,
+      );
     return allReservations;
   }
 
   async findHistoryByPatron(patronid: string): Promise<Reservation[]> {
     // console.log(this.instituteId)
-    const status = 'returned'
-    const allReservations = await this.reservationRepository.findReservationByPatron(this.instituteId, patronid, status);
+    const status = 'returned';
+    const allReservations =
+      await this.reservationRepository.findReservationByPatron(
+        this.instituteId,
+        patronid,
+        status,
+      );
     return allReservations;
   }
 
-  async findOne(id: string)
-  // : Promise<Reservation> 
-  {
-    const reservation = await this.reservationRepository.findByIdAndPopulate(id);
+  async findOne(
+    id: string, // : Promise<Reservation>
+  ) {
+    const reservation =
+      await this.reservationRepository.findByIdAndPopulate(id);
     const { dueDate } = reservation;
     // console.log(reservation)
     const getInstituteSettings = await this.instituteSettingRepository.findOne({
       instituteId: this.instituteId,
     });
     // console.log(getInstituteSettings)
-    let charges: number
+    let charges: number;
     if (reservation.patronType === 'student') {
-       charges = getInstituteSettings.student.overdueCharges;
+      charges = getInstituteSettings.student.overdueCharges;
     } else {
-       charges = getInstituteSettings.employee.overdueCharges;
+      charges = getInstituteSettings.employee.overdueCharges;
     }
 
     const overdueCharges = this.calculateOverdueCharges(dueDate, charges);
+    const checkAvailability = await this.getAvailability(
+      reservation.instituteId,
+      reservation.bookId,
+    );
     // console.log(overdueCharges)
-      reservation.overdueCharges = overdueCharges
-      // console.log(reservation)
+    reservation.overdueCharges = overdueCharges;
+    reservation.availability = checkAvailability
+    // console.log(reservation)
     // return getReservation;
     return reservation;
   }
 
-  async status(bookId){
-    const checkAvailability = await this.getAvailability(this.instituteId, bookId)
-    return checkAvailability
+  async status(bookId) {
+    const checkAvailability = await this.getAvailability(
+      this.instituteId,
+      bookId,
+    );
+    return checkAvailability;
   }
 }

@@ -27,7 +27,7 @@ let AppModule = class AppModule {
     configure(consumer) {
         consumer
             .apply(auth_1.AuthenticationMiddleware)
-            .forRoutes({ path: "/", method: common_1.RequestMethod.GET });
+            .forRoutes({ path: '/', method: common_1.RequestMethod.GET });
     }
 };
 exports.AppModule = AppModule;
@@ -46,17 +46,22 @@ exports.AppModule = AppModule = __decorate([
             module_5.SearchModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService, request_service_1.RequestService, {
+        providers: [
+            app_service_1.AppService,
+            request_service_1.RequestService,
+            {
                 provide: core_1.APP_GUARD,
-                useClass: auth_2.Authguard
-            }, {
+                useClass: auth_2.Authguard,
+            },
+            {
                 provide: core_1.APP_INTERCEPTOR,
                 scope: common_1.Scope.REQUEST,
-                useClass: logging_1.LoggingInterceptor
-            }, {
+                useClass: logging_1.LoggingInterceptor,
+            },
+            {
                 provide: core_1.APP_FILTER,
-                useClass: http_exception_1.exceptionFilter
-            }
+                useClass: http_exception_1.exceptionFilter,
+            },
         ],
     })
 ], AppModule);

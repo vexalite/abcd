@@ -83,6 +83,22 @@ export class BooksService {
   async findOne(id: string): Promise<Book | null> {
     try {
       const book = await this.booksRepository.findById(id);
+      const getQuantity = await this.bookInstitutesRepository.findOne({
+        bookId: id,
+        instituteId: this.instituteId,
+      });
+      // console.warn(getQuantity.quantity);
+  
+      const getIssued = await this.reservationRepository.findMultiple({
+        bookId: id,
+        instituteId: this.instituteId,
+        status: 'issued',
+      });
+      // console.log(getIssued.length);
+  
+      const getAvailability = getQuantity.quantity - getIssued.length
+      // console.warn(getAvailability)
+      book.availability = getAvailability
       return book;
     } catch (error) {
       console.error(`Error in findOne:`, (error as Error).message);

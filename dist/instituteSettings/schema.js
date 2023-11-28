@@ -30,11 +30,19 @@ __decorate([
     __metadata("design:type", String)
 ], InstituteSettings.prototype, "instituteId", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.default.Schema.Types.Mixed, required: true, default: defaultStudent }),
+    (0, mongoose_1.Prop)({
+        type: mongoose_2.default.Schema.Types.Mixed,
+        required: true,
+        default: defaultStudent,
+    }),
     __metadata("design:type", Object)
 ], InstituteSettings.prototype, "student", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.default.Schema.Types.Mixed, required: true, default: defaultEmployee }),
+    (0, mongoose_1.Prop)({
+        type: mongoose_2.default.Schema.Types.Mixed,
+        required: true,
+        default: defaultEmployee,
+    }),
     __metadata("design:type", Object)
 ], InstituteSettings.prototype, "employee", void 0);
 __decorate([

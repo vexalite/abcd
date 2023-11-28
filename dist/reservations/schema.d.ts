@@ -39,6 +39,7 @@ export interface Reservation extends Document {
     returnedDate?: Date;
     createdAt: Date;
     pendingCharges?: number;
+    availability: number;
 }
 export type ReservationDocument = Reservation & Document;
 export declare class Reservations {

@@ -8,7 +8,7 @@ async function bootstrap() {
         logger: ['error', 'warn', 'debug', 'verbose'],
     });
     const logger = new common_1.Logger();
-    await app.listen(process.env.PORT || 3000, "0.0.0.0");
+    await app.listen(process.env.PORT || 3000, '0.0.0.0');
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

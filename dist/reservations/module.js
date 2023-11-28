@@ -23,7 +23,7 @@ let ReservationsModule = class ReservationsModule {
     configure(consumer) {
         consumer
             .apply(auth_1.AuthenticationMiddleware)
-            .forRoutes({ path: "reservations/all", method: common_1.RequestMethod.GET }, { path: "reservations/:id", method: common_1.RequestMethod.GET }, { path: "reservations/status/:bookid", method: common_1.RequestMethod.GET }, { path: "reservations/book/:bookid", method: common_1.RequestMethod.GET }, { path: "reservations/patron/:patronid", method: common_1.RequestMethod.GET }, { path: "reservations/h/book/:bookid", method: common_1.RequestMethod.GET }, { path: "reservations/h/patron/:patronid", method: common_1.RequestMethod.GET }, { path: "reservations", method: common_1.RequestMethod.POST }, { path: "reservations/return/:id", method: common_1.RequestMethod.PATCH });
+            .forRoutes({ path: 'reservations/all', method: common_1.RequestMethod.GET }, { path: 'reservations/:id', method: common_1.RequestMethod.GET }, { path: 'reservations/status/:bookid', method: common_1.RequestMethod.GET }, { path: 'reservations/book/:bookid', method: common_1.RequestMethod.GET }, { path: 'reservations/patron/:patronid', method: common_1.RequestMethod.GET }, { path: 'reservations/h/book/:bookid', method: common_1.RequestMethod.GET }, { path: 'reservations/h/patron/:patronid', method: common_1.RequestMethod.GET }, { path: 'reservations', method: common_1.RequestMethod.POST }, { path: 'reservations/return/:id', method: common_1.RequestMethod.PATCH });
     }
 };
 exports.ReservationsModule = ReservationsModule;
@@ -46,7 +46,7 @@ exports.ReservationsModule = ReservationsModule = __decorate([
             repository_1.ReservationRepository,
             repository_2.BookInstitutesRepository,
             repository_3.InstituteSettingRepository,
-            request_service_1.RequestService
+            request_service_1.RequestService,
         ],
     })
 ], ReservationsModule);

@@ -40,7 +40,7 @@ let ReservationsService = class ReservationsService {
         const getIssued = await this.reservationRepository.findMultiple({
             bookId,
             instituteId,
-            status: 'issued'
+            status: 'issued',
         });
         const getAvailability = getQuantity.quantity - getIssued.length;
         return getAvailability;
@@ -54,7 +54,8 @@ let ReservationsService = class ReservationsService {
             if (checkAvailability > 0) {
                 if (body.patronType === 'student') {
                     body.dueDate = new Date();
-                    body.dueDate.setDate(body.dueDate.getDate() + getInstituteSettings.student.borrowingPeriod);
+                    body.dueDate.setDate(body.dueDate.getDate() +
+                        getInstituteSettings.student.borrowingPeriod);
                     const createdReservation = await this.reservationRepository.create({
                         ...body,
                         instituteId: this.instituteId,
@@ -63,7 +64,8 @@ let ReservationsService = class ReservationsService {
                 }
                 else {
                     body.dueDate = new Date();
-                    body.dueDate.setDate(body.dueDate.getDate() + getInstituteSettings.employee.borrowingPeriod);
+                    body.dueDate.setDate(body.dueDate.getDate() +
+                        getInstituteSettings.employee.borrowingPeriod);
                     const createdReservation = await this.reservationRepository.create({
                         ...body,
                         instituteId: this.instituteId,
@@ -172,7 +174,7 @@ let ReservationsService = class ReservationsService {
         const getIssued = await this.reservationRepository.findMultiple({
             bookId: bookid,
             instituteId: this.instituteId,
-            status: 'issued'
+            status: 'issued',
         });
         const checkAvailability = getQuantity.quantity - getIssued.length;
         const status = 'issued';
@@ -212,7 +214,9 @@ let ReservationsService = class ReservationsService {
             charges = getInstituteSettings.employee.overdueCharges;
         }
         const overdueCharges = this.calculateOverdueCharges(dueDate, charges);
+        const checkAvailability = await this.getAvailability(reservation.instituteId, reservation.bookId);
         reservation.overdueCharges = overdueCharges;
+        reservation.availability = checkAvailability;
         return reservation;
     }
     async status(bookId) {

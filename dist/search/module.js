@@ -21,7 +21,7 @@ let SearchModule = class SearchModule {
     configure(consumer) {
         consumer
             .apply(auth_1.AuthenticationMiddleware)
-            .forRoutes({ path: "search/:text", method: common_1.RequestMethod.GET });
+            .forRoutes({ path: 'search/:text', method: common_1.RequestMethod.GET });
     }
 };
 exports.SearchModule = SearchModule;

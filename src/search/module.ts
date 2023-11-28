@@ -1,4 +1,9 @@
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { SearchService } from './service';
 import { SearchController } from './controller';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -19,12 +24,10 @@ import { AuthenticationMiddleware } from 'src/middleware/auth';
   controllers: [SearchController],
   providers: [SearchService, SearchRepository, BooksRepository, RequestService],
 })
-export class SearchModule 
-implements NestModule
-{
-  configure(consumer: MiddlewareConsumer){
+export class SearchModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
     consumer
-    .apply(AuthenticationMiddleware)
-    .forRoutes({ path: "search/:text", method: RequestMethod.GET})
+      .apply(AuthenticationMiddleware)
+      .forRoutes({ path: 'search/:text', method: RequestMethod.GET });
   }
 }

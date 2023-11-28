@@ -44,6 +44,10 @@ __decorate([
     __metadata("design:type", Number)
 ], Books.prototype, "pageCount", void 0);
 __decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", Number)
+], Books.prototype, "availability", void 0);
+__decorate([
     (0, mongoose_1.Prop)({ type: mongoose_2.default.Schema.Types.Mixed }),
     __metadata("design:type", Object)
 ], Books.prototype, "dimensions", void 0);

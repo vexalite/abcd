@@ -83,6 +83,17 @@ let BooksService = class BooksService {
     async findOne(id) {
         try {
             const book = await this.booksRepository.findById(id);
+            const getQuantity = await this.bookInstitutesRepository.findOne({
+                bookId: id,
+                instituteId: this.instituteId,
+            });
+            const getIssued = await this.reservationRepository.findMultiple({
+                bookId: id,
+                instituteId: this.instituteId,
+                status: 'issued',
+            });
+            const getAvailability = getQuantity.quantity - getIssued.length;
+            book.availability = getAvailability;
             return book;
         }
         catch (error) {

@@ -6,9 +6,7 @@ export class SearchController {
   constructor(private readonly searchService: SearchService) {}
 
   @Get(':text')
-  async universalSearch(
-    @Param('text') text: string,
-  ) {
+  async universalSearch(@Param('text') text: string) {
     const books = await this.searchService.universalSearch(text);
     return books;
   }

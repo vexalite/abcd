@@ -32,6 +32,7 @@ export interface Book extends Document {
   averageRating?: number;
   createdAt: Date;
   updatedAt?: Date | undefined;
+  availability: number
 }
 
 @Schema()
@@ -59,6 +60,9 @@ export class Books extends Document {
 
   @Prop({ required: true })
   pageCount!: number;
+
+  @Prop()
+  availability?: number;
 
   @Prop({ type: mongoose.Schema.Types.Mixed })
   dimensions?: {

@@ -26,7 +26,7 @@ let BooksModule = class BooksModule {
     configure(consumer) {
         consumer
             .apply(auth_1.AuthenticationMiddleware)
-            .forRoutes({ path: "books/:isbn", method: common_1.RequestMethod.POST }, { path: "books", method: common_1.RequestMethod.GET }, { path: "books/totalbooks", method: common_1.RequestMethod.GET });
+            .forRoutes({ path: "books/:isbn", method: common_1.RequestMethod.POST }, { path: "books", method: common_1.RequestMethod.GET }, { path: "books/:id", method: common_1.RequestMethod.GET }, { path: "books/totalbooks", method: common_1.RequestMethod.GET });
     }
 };
 exports.BooksModule = BooksModule;

@@ -15,7 +15,7 @@ class CustomLogger extends common_1.ConsoleLogger {
             'Mapped',
             'Nest application successfully started',
         ];
-        return messagesToDisable.some(pattern => message.includes(pattern));
+        return messagesToDisable.some((pattern) => message.includes(pattern));
     }
 }
 exports.CustomLogger = CustomLogger;
