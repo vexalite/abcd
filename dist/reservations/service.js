@@ -37,11 +37,13 @@ let ReservationsService = class ReservationsService {
             bookId,
             instituteId,
         });
+        console.log(getQuantity.quantity);
         const getIssued = await this.reservationRepository.findMultiple({
             bookId,
             instituteId,
             status: 'issued',
         });
+        console.log(getIssued.length);
         const getAvailability = getQuantity.quantity - getIssued.length;
         return getAvailability;
     }
@@ -214,9 +216,7 @@ let ReservationsService = class ReservationsService {
             charges = getInstituteSettings.employee.overdueCharges;
         }
         const overdueCharges = this.calculateOverdueCharges(dueDate, charges);
-        const checkAvailability = await this.getAvailability(reservation.instituteId, reservation.bookId);
         reservation.overdueCharges = overdueCharges;
-        reservation.availability = checkAvailability;
         return reservation;
     }
     async status(bookId) {

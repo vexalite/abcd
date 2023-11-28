@@ -42,14 +42,14 @@ export class ReservationsService {
       bookId,
       instituteId,
     });
-    // console.log(getQuantity.quantity);
+    console.log(getQuantity.quantity);
 
     const getIssued = await this.reservationRepository.findMultiple({
       bookId,
       instituteId,
       status: 'issued',
     });
-    // console.log(getIssued.length);
+    console.log(getIssued.length);
 
     const getAvailability = getQuantity.quantity - getIssued.length;
     // console.log(`available -- ${getAvailability}`);
@@ -298,15 +298,8 @@ export class ReservationsService {
     }
 
     const overdueCharges = this.calculateOverdueCharges(dueDate, charges);
-    const checkAvailability = await this.getAvailability(
-      reservation.instituteId,
-      reservation.bookId,
-    );
-    // console.log(overdueCharges)
     reservation.overdueCharges = overdueCharges;
-    reservation.availability = checkAvailability
-    // console.log(reservation)
-    // return getReservation;
+
     return reservation;
   }
 
